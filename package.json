@@ -1,0 +1,23 @@
+{
+  "name": "fund_manager_web",
+  "version": "0.0.1",
+  "description": "fund_manager_web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netbeen/FundManagerWeb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/netbeen/FundManagerWeb/issues"
+  },
+  "homepage": "https://github.com/netbeen/FundManagerWeb#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "koa": "^2.0.0"
+  }
+}
