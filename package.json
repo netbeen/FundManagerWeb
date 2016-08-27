@@ -25,11 +25,22 @@
     "babel-polyfill": ">=6.13.0",
     "babel-preset-es2015-node6": ">=0.3.0",
     "babel-preset-stage-3": ">=6.11.0",
+    "bower": ">=1.7.9",
+    "del": ">=2.2.2",
+    "gulp": ">=3.9.1",
+    "gulp-bower": ">=0.0.13",
+    "gulp-connect": "^5.0.0",
+    "gulp-stylus": "^2.5.0",
     "koa": ">=2.0.0",
     "koa-bodyparser": ">=3.2.0",
     "koa-pug": ">=3.0.0-0",
     "koa-router": ">=7.0.1",
-    "pug": ">=2.0.0-beta6"
+    "main-bower-files": "^2.13.1",
+    "pug": ">=2.0.0-beta6",
+    "q": ">=2.0.3",
+    "run-sequence": ">=1.2.2",
+    "stylus": "^0.54.5",
+    "vinyl-paths": ">=2.1.0"
   },
   "devDependencies": {}
 }
