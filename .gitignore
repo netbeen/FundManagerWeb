@@ -1,3 +1,5 @@
 node_modules/*
 .idea/*
 npm-debug.log
+bower_components/*
+static-assets/build/*

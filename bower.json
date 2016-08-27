@@ -1,0 +1,20 @@
+{
+  "name": "fund_manager_web",
+  "description": "fund_manager_web",
+  "main": "index.js",
+  "authors": [
+    "NetBeen <netbeen.cn@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/netbeen/FundManagerWeb",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": ">=3.3.2"
+  }
+}
