@@ -1,6 +1,9 @@
 {
   "version": "20160827",
   "js": [
+    "static-assets/build/js/jquery.js",
+    "static-assets/build/js/bootstrap.js",
+    "static-assets/build/js/tether.js"
   ],
   "css": [
   ]

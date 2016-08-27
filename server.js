@@ -1,5 +1,5 @@
 const Koa = require('koa');
-const Pug = require('koa-pug')
+const Pug = require('koa-pug');
 
 const app = new Koa();
 const pug = new Pug({
@@ -8,7 +8,7 @@ const pug = new Pug({
   pretty: false,
   compileDebug: false,
   app: app
-})
+});
 
 app.use(async(ctx, next) => {
   console.log(`Process ${ctx.request.method} ${ctx.request.url}`);
