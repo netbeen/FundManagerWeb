@@ -1,7 +1,16 @@
 const Koa = require('koa');
-const app = new Koa();
+const Pug = require('koa-pug')
 
-app.use(async (ctx, next) => {
+const app = new Koa();
+const pug = new Pug({
+  viewPath: './app/views/',
+  debug: false,
+  pretty: false,
+  compileDebug: false,
+  app: app
+})
+
+app.use(async(ctx, next) => {
   console.log(`Process ${ctx.request.method} ${ctx.request.url}`);
   await next();
 });
