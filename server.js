@@ -1,12 +1,12 @@
 const Koa = require('koa');
 const app = new Koa();
-const router = require('koa-router')();
 
-app.use(async(ctx, next) => {
+app.use(async (ctx, next) => {
+  console.log(`Process ${ctx.request.method} ${ctx.request.url}`);
   await next();
-  ctx.response.type = 'text/html';
-  ctx.response.body = '<h1>Hello, koa2!</h1>';
 });
+
+app.use(require('./app/router').routes());
 
 app.listen(3000);
 console.log('app started at port 3000...');
