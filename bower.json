@@ -16,5 +16,17 @@
   ],
   "dependencies": {
     "bootstrap": ">=4.0.0-alpha.3"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/js/bootstrap.js",
+        "dist/fonts/*",
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap.css.map",
+        "dist/css/bootstrap-theme.css"
+      ]
+    }
   }
 }

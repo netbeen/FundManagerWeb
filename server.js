@@ -1,5 +1,6 @@
 const Koa = require('koa');
 const Pug = require('koa-pug');
+const config = require('./config');
 
 const app = new Koa();
 const pug = new Pug({
@@ -7,7 +8,8 @@ const pug = new Pug({
   debug: false,
   pretty: false,
   compileDebug: false,
-  app: app
+  app: app,
+  locals: config
 });
 
 app.use(async(ctx, next) => {
