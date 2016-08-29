@@ -1,13 +1,12 @@
 const fundService = require('../services/fund');
 
 let render = async (ctx, next) => {
-  let fundIds = fundService.getFundIds();
-  let fundPurchaseInfo = fundService.getFundPurchaseInfo(fundIds[0]);
+  let fundPurchaseInfo = fundService.getFundPurchaseInfo();
   ctx.render('fund',{
     'pageName':'fund',
-    'fundIds':fundIds
+    'fundIds':Object.keys(fundPurchaseInfo)
   });
-}
+};
 
 module.exports = {
   render: render
