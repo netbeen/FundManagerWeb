@@ -1,5 +1,8 @@
 $(function() {
   if ($('#pageName').val() === 'fund') {
-    console.log('page');
+    $('#fund-id-list > .list-group-item').on('click', function(){
+      $('#fund-id-list > .list-group-item').removeClass('active');
+      $(this).addClass('active');
+    });
   }
 });
