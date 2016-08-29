@@ -1,9 +1,11 @@
 extends layout
 block content
-    .row
-        .col-md-2
-            <a href="#" class="list-group-item active">免费域名注册</a>
-            <a href="#" class="list-group-item">24*7 支持</a>
-            <a href="#" class="list-group-item">免费 Window 空间托管</a>
-            <a href="#" class="list-group-item">图像的数量</a>
-            <a href="#" class="list-group-item">每年更新成本</a>
+    .container
+        .row
+            .col-md-2
+                each fundId in fundIds
+                    a.list-group-item(href="#") #{fundId}
+                //<a href="#" class="list-group-item active">免费域名注册</a>
+                //<a href="#" class="list-group-item">24*7 支持</a>
+            .col-md-10
+                .dd yyyy
