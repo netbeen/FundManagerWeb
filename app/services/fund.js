@@ -1,3 +1,4 @@
+'use strict';
 const _ = require('underscore');
 const purchaseInfo = require('../models/purchaseInfo');
 const scrap = require('../models/scrap');

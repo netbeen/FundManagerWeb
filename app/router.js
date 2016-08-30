@@ -1,3 +1,4 @@
+'use strict';
 const router = require('koa-router')();
 const fundController = require('./controllers/fund');
 const apiFundController = require('./controllers/api/fund');

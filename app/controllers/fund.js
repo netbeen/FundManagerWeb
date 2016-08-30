@@ -1,3 +1,4 @@
+'use strict';
 const fundService = require('../services/fund');
 
 let render = async (ctx, next) => {
