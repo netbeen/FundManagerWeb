@@ -6,5 +6,6 @@
     "static-assets/build/js/fund.js"
   ],
   "css": [
+    "static-assets/build/css/fund.css"
   ]
 }

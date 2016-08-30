@@ -2,7 +2,7 @@ const _ = require('underscore');
 const purchaseInfo = require('../models/purchaseInfo');
 const scrap = require('../models/scrap');
 
-let getFundPurchaseInfo = () => {
+let getPurchaseInfo = () => {
   let fundIds = purchaseInfo.getFundIds();
   let purchaseInfoJson = {};
   _.each(fundIds, (fundId) => {
@@ -11,10 +11,19 @@ let getFundPurchaseInfo = () => {
   return purchaseInfoJson;
 };
 
-let getFundValueById = (fundId) => {
-  return scrap.getFundValueById(fundId);
+let getPurchaseInfoById = (fundId) =>{
+  return purchaseInfo.getFundPurchaseInfoById(fundId);
+}
+
+let getValueById = (fundId) => {
+  let webData = scrap.getFundValueById(fundId);
+  let userPurchaseInfo = getPurchaseInfoById(fundId);
+  console.log(webData);
+  console.log('##########');
+  console.log(userPurchaseInfo)
 };
 
 module.exports = {
-  getFundPurchaseInfo: getFundPurchaseInfo
+  getFundPurchaseInfo: getPurchaseInfo,
+  getValueById:getValueById
 };

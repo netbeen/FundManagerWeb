@@ -9,15 +9,14 @@ let getFundIds = ()=> {
 
 let getFundPurchaseInfoById = (fundId) => {
   let lineStrings = fs.readFileSync(path.join(fundPurchaseInfoDir, fundId), "utf8").split('\n');
-  return _.map(_.filter(lineStrings, (lineString)=> {
+  let purchaseInfoJson = {};
+  _.each(_.filter(lineStrings, (lineString)=> {
     return lineString !== '';
   }), (lineString) => {
     let splitData = lineString.split('\t');
-    return {
-      'date': splitData[0],
-      'value': splitData[1]
-    };
+    purchaseInfoJson[splitData[0]] = splitData[1];
   });
+  return purchaseInfoJson;
 };
 
 module.exports = {
