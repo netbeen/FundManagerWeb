@@ -2,8 +2,10 @@ const fundService = require('../../services/fund');
 
 let getGraphInfo = async (ctx, next) => {
   console.log(ctx.params);
-  fundService.getValueById(ctx.params.id);
-  ctx.body = 'yy';
+  let values = fundService.getValueById(ctx.params.id);
+  ctx.body = {
+    'values': values
+  };
 };
 
 module.exports = {

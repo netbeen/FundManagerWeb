@@ -11,16 +11,26 @@ let getPurchaseInfo = () => {
   return purchaseInfoJson;
 };
 
+let filterUselessData = (webPurchaseData, userPurchaseInfo) => {
+  let firstDay = Object.keys(userPurchaseInfo)[0];
+  let firstDate = new Date(firstDay);
+  _.each(Object.keys(webPurchaseData), (webDate)=>{
+    if(firstDate > new Date(webDate)){
+      delete webPurchaseData[webDate];
+    }
+  });
+  return webPurchaseData;
+};
+
 let getPurchaseInfoById = (fundId) =>{
   return purchaseInfo.getFundPurchaseInfoById(fundId);
-}
+};
 
 let getValueById = (fundId) => {
-  let webData = scrap.getFundValueById(fundId);
+  let webPurchaseData = scrap.getFundValueById(fundId);
   let userPurchaseInfo = getPurchaseInfoById(fundId);
-  console.log(webData);
-  console.log('##########');
-  console.log(userPurchaseInfo)
+  let filteredPurchaseData = filterUselessData(webPurchaseData,userPurchaseInfo);
+  return filteredPurchaseData;
 };
 
 module.exports = {

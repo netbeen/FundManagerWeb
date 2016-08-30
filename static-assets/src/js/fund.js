@@ -4,7 +4,7 @@ $(function() {
       $('#fund-id-list > .list-group-item').removeClass('active');
       $(this).addClass('active');
       $.ajax({
-        url: '/api/v1/fund/160119',
+        url: '/api/v1/fund/'+this.innerHTML,
         type: "get",
       }).done(function(data) {
         console.log(data);
