@@ -51,6 +51,7 @@ let calcUserPircesById = (fundId,chartData) => {
 let getChartDataById = (fundId) => {
   let values = getValueById(fundId);
   let chartData = {};
+  chartData.fundId = fundId;
   chartData.dates = Object.keys(values).reverse();
   chartData.unitPrices = _.map(Object.keys(values),function(date){
     return parseFloat(values[date]);

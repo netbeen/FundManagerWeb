@@ -11,10 +11,10 @@ $(function() {
         var dates = chartData.dates;
         var unitPrices = chartData.unitPrices;
         var userPrices = chartData.userPrices;
-        var unitPriceCompareOption = {
+        var priceCompareOption = {
           title: {
             text: '成本净值对比图',
-            subtext: 'kkkkk'
+            subtext: chartData.fundId
           },
           tooltip: {
             trigger: 'axis'
@@ -88,8 +88,8 @@ $(function() {
               }
             }]
         };
-        var unitPriceCompare = echarts.init(document.getElementById('unitPriceCompare'));
-        unitPriceCompare.setOption(unitPriceCompareOption);
+        var priceCompare = echarts.init(document.getElementById('priceCompare'));
+        priceCompare.setOption(priceCompareOption);
       });
     });
   }
