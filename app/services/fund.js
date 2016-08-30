@@ -1,6 +1,7 @@
 const _ = require('underscore');
 const purchaseInfo = require('../models/purchaseInfo');
 const scrap = require('../models/scrap');
+const redeemFeeRate = 0.5 / 100;
 
 let getPurchaseInfo = () => {
   let fundIds = purchaseInfo.getFundIds();
@@ -56,6 +57,17 @@ let calcProfitRates = (unitPrices,userPrices) => {
   return profitRates
 };
 
+let calcProfitsRatePerYear = (dates,profitRates) => {
+  let profitsRatesPerYear = [];
+  profitsRatesPerYear.push(0);
+  for (let i = 1; i < profitRates.length; i++){
+    let redeemProfitRate = profitRates[i]/100 - redeemFeeRate;
+    let duration = (new Date(dates[i]) - new Date(dates[0]))/24/3600/1000;
+    profitsRatesPerYear.push((redeemProfitRate/duration*365*100).toFixed(2));
+  }
+  return profitsRatesPerYear;
+};
+
 let getChartDataById = (fundId) => {
   let values = getValueById(fundId);
   let chartData = {};
@@ -66,6 +78,7 @@ let getChartDataById = (fundId) => {
   }).reverse();
   chartData.userPrices = calcUserPircesById(fundId,chartData);
   chartData.profitRates = calcProfitRates(chartData.unitPrices,chartData.userPrices);
+  chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates,chartData.profitRates);
 
   return chartData;
 };

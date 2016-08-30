@@ -12,6 +12,7 @@ $(function() {
         var unitPrices = chartData.unitPrices;
         var userPrices = chartData.userPrices;
         var profitRates = chartData.profitRates;
+        var profitsRatesPerYear = chartData.profitsRatesPerYear;
         var priceCompareOption = {
           title: {
             text: '成本净值对比图',
@@ -161,16 +162,90 @@ $(function() {
           }]
         };
 
+        var profitRatePerYearCompareOption = {
+          color: ['#dd8668'],
+          title: {
+            text: '年化收益率示意图',
+            subtext: chartData.fundId
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: ['赎回年化收益率%']
+          },
+          toolbox: {
+            show: true,
+            feature: {
+              dataView: {
+                show: true,
+                readOnly: false
+              },
+              restore: {
+                show: true
+              },
+              saveAsImage: {
+                show: true
+              }
+            }
+          },
+          calculable: true,
+          xAxis: [{
+            show: false,
+            type: 'category',
+            boundaryGap: ['20%', '20%'],
+            data: dates
+          }],
+          yAxis: [{
+            type: 'value',
+            scale: true,
+            axisLabel: {
+              formatter: function (v) {
+                return v + '%'
+              }
+            }
+          }],
+          series: [
+            {
+              name: '赎回年化收益率%',
+              type: 'line',
+              data: profitsRatesPerYear,
+              markLine: {
+                data: [
+                  [{
+                    name: '0%收益率线',
+                    coord: [dates[0], 0]
+                  }, {
+                    coord: [dates[dates.length - 1], 0]
+                  }
+                  ]]
+              },
+
+              markPoint: {
+                data: [{
+                  symbolSize: 60,
+                  type: 'max',
+                  name: '最大值'
+                },
+                  {
+                    type: 'min',
+                    symbolSize: 60,
+                    name: '最小值'
+                  }]
+              },
+            }]
+        };
+
         var priceCompare = echarts.init(document.getElementById('priceCompare'));
         priceCompare.setOption(priceCompareOption);
 
         var profitRate = echarts.init(document.getElementById('profitRateCompare'));
         profitRate.setOption(profitRateOption);
-        //
-        // var profitRateComparePerYear = echarts.init(document.getElementById('profitRatePerYearCompare'));
-        // profitRateComparePerYear.setOption(profitRatePerYearCompareOption);
-        //
-        // echarts.connect([unitPriceCompare, profitRateCompare, profitRateComparePerYear]);
+
+        var profitRateComparePerYear = echarts.init(document.getElementById('profitRatePerYearCompare'));
+        profitRateComparePerYear.setOption(profitRatePerYearCompareOption);
+
+        echarts.connect([priceCompare, profitRate, profitRateComparePerYear]);
       });
     });
   }
