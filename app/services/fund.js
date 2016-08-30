@@ -48,6 +48,14 @@ let calcUserPircesById = (fundId,chartData) => {
   return userPirces;
 };
 
+let calcProfitRates = (unitPrices,userPrices) => {
+  let profitRates = [];
+  for (let i = 0; i < unitPrices.length; i++){
+    profitRates.push(((unitPrices[i]-userPrices[i])/userPrices[i]*100).toFixed(2));
+  }
+  return profitRates
+};
+
 let getChartDataById = (fundId) => {
   let values = getValueById(fundId);
   let chartData = {};
@@ -57,6 +65,7 @@ let getChartDataById = (fundId) => {
     return parseFloat(values[date]);
   }).reverse();
   chartData.userPrices = calcUserPircesById(fundId,chartData);
+  chartData.profitRates = calcProfitRates(chartData.unitPrices,chartData.userPrices);
 
   return chartData;
 };
