@@ -33,7 +33,35 @@ let getValueById = (fundId) => {
   return filteredPurchaseData;
 };
 
+let calcUserPircesById = (fundId,chartData) => {
+  let totalCost = 0;
+  let totalShare = 0;
+  let userPurchaseInfo = getPurchaseInfoById(fundId);
+  let userPirces = [];
+  for (let i = 0; i < chartData.unitPrices.length; i++){
+    if(userPurchaseInfo.hasOwnProperty(chartData.dates[i])){
+      totalCost += parseFloat(userPurchaseInfo[chartData.dates[i]]);
+      totalShare += (parseFloat(userPurchaseInfo[chartData.dates[i]]) / chartData.unitPrices[i]);
+    }
+    userPirces.push((totalCost/totalShare).toFixed(4));
+  }
+  return userPirces;
+};
+
+let getChartDataById = (fundId) => {
+  let values = getValueById(fundId);
+  let chartData = {};
+  chartData.dates = Object.keys(values).reverse();
+  chartData.unitPrices = _.map(Object.keys(values),function(date){
+    return parseFloat(values[date]);
+  }).reverse();
+  chartData.userPrices = calcUserPircesById(fundId,chartData);
+
+  return chartData;
+};
+
 module.exports = {
+  getChartDataById: getChartDataById,
   getFundPurchaseInfo: getPurchaseInfo,
   getValueById:getValueById
 };

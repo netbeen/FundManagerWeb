@@ -6,11 +6,11 @@ $(function() {
       $.ajax({
         url: '/api/v1/fund/'+this.innerHTML,
         type: "get",
-      }).done(function(data) {
-        var dates = Object.keys(data.values).reverse();
-        var fundValues = _.map(Object.keys(data.values),function(date){
-          return data.values[date];
-        }).reverse();
+      }).done(function(chartData) {
+        console.log(chartData);
+        var dates = chartData.dates;
+        var unitPrices = chartData.unitPrices;
+        var userPrices = chartData.userPrices;
         var unitPriceCompareOption = {
           title: {
             text: '成本净值对比图',
@@ -50,7 +50,7 @@ $(function() {
           series: [{
             name: '单位净值',
             type: 'line',
-            data: fundValues,
+            data: unitPrices,
             markPoint: {
               data: [{
                 symbolSize: 60,
@@ -73,7 +73,7 @@ $(function() {
             {
               name: '持仓成本',
               type: 'line',
-              data: fundValues,
+              data: userPrices,
               markPoint: {
                 data: [{
                   symbolSize: 60,
