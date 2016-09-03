@@ -1,5 +1,25 @@
 $(function() {
   if ($('#pageName').val() === 'fund') {
+    var lastElemStringify = function(array){
+      var lastElem  = array[array.length-1];
+      var result = '';
+      if(lastElem >= 0){
+        result = '+';
+      }
+      result += String(lastElem) + '%';
+      return result;
+    };
+
+    var setProfitRateStyle = function(array,target){
+      if(array[array.length-1] < 0){
+        target.addClass('green');
+        target.removeClass('red');
+      }else{
+        target.addClass('red');
+        target.removeClass('green');
+      }
+    };
+
     $('#fund-id-list > .list-group-item').on('click', function(){
       $('#fund-id-list > .list-group-item').removeClass('active');
       $(this).addClass('active');
@@ -8,6 +28,15 @@ $(function() {
         type: "get",
       }).done(function(chartData) {
         console.log(chartData);
+
+        $('#totalCost').html(chartData.overview.totalCost);
+        $('#currentPrice').html(chartData.overview.currentPrice);
+        $('#profitRate').html(lastElemStringify(chartData.profitRates));
+        $('#profitRatePerYear').html(lastElemStringify(chartData.profitsRatesPerYear));
+
+        setProfitRateStyle(chartData.profitRates,$('#profitRate'));
+        setProfitRateStyle(chartData.profitsRatesPerYear,$('#profitRatePerYear'));
+
         var dates = chartData.dates;
         var unitPrices = chartData.unitPrices;
         var userPrices = chartData.userPrices;
