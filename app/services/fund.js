@@ -78,9 +78,16 @@ let calcProfitsRatePerYear = (dates, profitRates) => {
   return profitsRatesPerYear;
 };
 
+let calcRtProfitRatePerYear = (startDate, endDate, profitRate) => {
+  let duration = (new Date(endDate) - new Date(startDate)) / 24 / 3600 / 1000;
+  let redeemProfitRate = profitRate / 100 - redeemFeeRate;
+  return (redeemProfitRate / duration * 365 * 100).toFixed(2);
+};
+
 let getChartDataById = (fundId) => {
   let values = getValueById(fundId);
   let chartData = {};
+  chartData.overview = {};
   chartData.fundId = fundId;
   chartData.dates = Object.keys(values).reverse();
   chartData.unitPrices = _.map(Object.keys(values), function (date) {
@@ -89,9 +96,17 @@ let getChartDataById = (fundId) => {
   chartData.userPrices = calcUserPircesById(fundId, chartData);
   chartData.profitRates = calcProfitRates(chartData.unitPrices, chartData.userPrices);
   chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates);
-  chartData.overview = {};
   chartData.overview.totalCost = calcTotalCoseById(fundId).toFixed(2);
   chartData.overview.currentPrice= (chartData.overview.totalCost * (1+chartData.profitRates[chartData.profitRates.length-1]/100)).toFixed(2);
+
+  let realTimeData = scrap.getRealTimeInfoById(fundId);
+  chartData.fundName = realTimeData.name;
+  chartData.lastQuotedDate = realTimeData.jzrq;
+  chartData.trading = !(realTimeData.gztime.slice(0,10) === chartData.lastQuotedDate);
+  chartData.rtUnitPrice = parseFloat(realTimeData.gsz).toFixed(4);
+  chartData.rtProfitRate = ((chartData.rtUnitPrice-chartData.unitPrices[chartData.unitPrices.length-1])/chartData.unitPrices[chartData.unitPrices.length-1]*100).toFixed(2);
+  chartData.rtTimeStamp = realTimeData.gztime;
+  chartData.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0],chartData.dates[chartData.dates.length-1],parseFloat(chartData.profitRates[chartData.profitRates.length-1])+parseFloat(chartData.rtProfitRate));
 
   return chartData;
 };

@@ -8,20 +8,36 @@ block content
             .col-md-10
                 #overview
                     .row
-                        .col-md-4
+                        .col-md-3
+                            .row
+                                div.label 基金编号
+                                #fundId.content
+                            .row
+                                div.label 基金名称
+                                #fundName.content
+                        .col-md-3
                             .row
                                 div.label 总成本
                                 #totalCost.content
                             .row
                                 div.label 总净值
                                 #currentPrice.content
-                        .col-md-4
+                        .col-md-3
                             .row
                                 div.label 当前收益
                                 #profitRate.content
                             .row
                                 div.label 年化收益
                                 #profitRatePerYear.content
+                        .col-md-3
+                            .row.trading
+                                div.label 当日涨跌
+                                #rtProfitRate.content
+                            .row.trading
+                                div.label 实时年化
+                                #rtProfitRatePerYear.content
+                            .row.untrading.hide
+                                div.label 未在交易时间
                 #priceCompare
                 #profitRateCompare
                 #profitRatePerYearCompare

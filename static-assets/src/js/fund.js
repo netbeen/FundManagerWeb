@@ -10,8 +10,27 @@ $(function() {
       return result;
     };
 
-    var setProfitRateStyle = function(array,target){
+    var percentagify = function(elem){
+      var result = '';
+      if(elem >= 0){
+        result = '+';
+      }
+      result += String(elem) + '%';
+      return result;
+    };
+
+    var setProfitRateStyleByArray = function(array,target){
       if(array[array.length-1] < 0){
+        target.addClass('green');
+        target.removeClass('red');
+      }else{
+        target.addClass('red');
+        target.removeClass('green');
+      }
+    };
+
+    var setProfitRateStyle = function(flag,target){
+      if(flag < 0){
         target.addClass('green');
         target.removeClass('red');
       }else{
@@ -29,13 +48,24 @@ $(function() {
       }).done(function(chartData) {
         console.log(chartData);
 
+        $('#fundId').html(chartData.fundId);
+        $('#fundName').html(chartData.fundName);
         $('#totalCost').html(chartData.overview.totalCost);
         $('#currentPrice').html(chartData.overview.currentPrice);
         $('#profitRate').html(lastElemStringify(chartData.profitRates));
         $('#profitRatePerYear').html(lastElemStringify(chartData.profitsRatesPerYear));
+        $('#rtProfitRate').html(percentagify(chartData.rtProfitRate) + ' ( ' + chartData.rtTimeStamp +' )') ;
+        $('#rtProfitRatePerYear').html(percentagify(chartData.rtProfitRatePerYear));
 
-        setProfitRateStyle(chartData.profitRates,$('#profitRate'));
-        setProfitRateStyle(chartData.profitsRatesPerYear,$('#profitRatePerYear'));
+        setProfitRateStyleByArray(chartData.profitRates,$('#profitRate'));
+        setProfitRateStyleByArray(chartData.profitsRatesPerYear,$('#profitRatePerYear'));
+        setProfitRateStyle(chartData.rtProfitRate,$('#rtProfitRate'));
+        setProfitRateStyle(chartData.rtProfitRatePerYear,$('#rtProfitRatePerYear'));
+
+        if(chartData.trading === false){
+          $('#overview .trading').addClass('hide');
+          $('#overview .untrading').removeClass('hide');
+        }
 
         var dates = chartData.dates;
         var unitPrices = chartData.unitPrices;

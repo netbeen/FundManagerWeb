@@ -12,6 +12,14 @@ let getFundValueById = (fundId) => {
   return valueJson;
 };
 
+let getRealTimeInfoById = (fundId) => {
+  const realTimeInfoURL = `http://fundgz.1234567.com.cn/js/${fundId}.js`;
+  let rawResponse = syncRequest('GET',realTimeInfoURL).body.toString('utf-8');
+  let jsonResult = JSON.parse(rawResponse.slice(8,-2));
+  return jsonResult;
+};
+
 module.exports = {
-  getFundValueById:getFundValueById
+  getFundValueById:getFundValueById,
+  getRealTimeInfoById:getRealTimeInfoById
 };
