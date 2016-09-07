@@ -101,7 +101,7 @@ let getChartDataById = (fundId) => {
 
   let realTimeData = scrap.getRealTimeInfoById(fundId);
   chartData.fundName = realTimeData.name;
-  chartData.lastQuotedDate = realTimeData.jzrq;
+  chartData.lastQuotedDate = chartData.dates[chartData.dates.length-1];
   chartData.trading = !(realTimeData.gztime.slice(0,10) === chartData.lastQuotedDate);
   chartData.rtUnitPrice = parseFloat(realTimeData.gsz).toFixed(4);
   chartData.rtProfitRate = ((chartData.rtUnitPrice-chartData.unitPrices[chartData.unitPrices.length-1])/chartData.unitPrices[chartData.unitPrices.length-1]*100).toFixed(2);
