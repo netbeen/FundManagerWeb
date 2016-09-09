@@ -14,8 +14,8 @@ let getFundPurchaseInfoById = (fundId) => {
   _.each(_.filter(lineStrings, (lineString)=> {
     return lineString !== '';
   }), (lineString) => {
-    let splitData = lineString.split('\t');
-    purchaseInfoJson[splitData[0]] = splitData[1];
+    let splitData = lineString.split(',');
+    purchaseInfoJson[splitData[0]] = parseFloat(splitData[1]);
   });
   return purchaseInfoJson;
 };
