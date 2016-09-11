@@ -5,7 +5,7 @@ const syncRequest = require('sync-request');
 /**
  * 根据基金ID抓取基金所有历史净值
  * @param fundId 基金ID
- * @return { '2016-09-09': 1.5776,
+ * @returns { '2016-09-09': 1.5776,
   '2016-09-08': 1.5981,
   '2016-09-07': 1.5543, ... }
  */
@@ -22,7 +22,7 @@ let getFundValueById = (fundId) => {
 /**
  * 根据基金ID抓取当天实时净值估算
  * @param fundId 基金ID
- * @return { fundName: '南方中证500ETF联接',
+ * @returns { fundName: '南方中证500ETF联接',
   estimatedValue: 1.5769,
   estimatedTime: '2016-09-09 15:00' }
  */

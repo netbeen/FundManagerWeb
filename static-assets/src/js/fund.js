@@ -49,7 +49,7 @@ $(function() {
         console.log(chartData);
 
         $('#fundId').html(chartData.fundId);
-        $('#fundName').html(chartData.fundName);
+        $('#fundName').html(chartData.overview.fundName);
         $('#totalCost').html(chartData.overview.totalCost);
         $('#currentPrice').html(chartData.overview.currentPrice);
         $('#profitRate').html(lastElemStringify(chartData.profitRates));
