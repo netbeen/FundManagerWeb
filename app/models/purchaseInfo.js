@@ -4,6 +4,10 @@ const path = require('path');
 const _ = require('underscore');
 const fundPurchaseInfoDir = 'data/fund_purchase_info/';
 
+/**
+ * 读取已购买的基金ID
+ * @return [ '002656', '160119', '202015' ]
+ */
 let getFundIds = ()=> {
   return fs.readdirSync(fundPurchaseInfoDir);
 };

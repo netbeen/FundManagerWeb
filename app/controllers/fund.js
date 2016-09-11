@@ -1,11 +1,11 @@
 'use strict';
-const fundService = require('../services/fund');
+const purchaseInfoModel = require('../models/purchaseInfo');
 
 let render = async (ctx, next) => {
-  let fundPurchaseInfo = fundService.getFundPurchaseInfo();
+  let fundIds = purchaseInfoModel.getFundIds();
   ctx.render('fund',{
     'pageName':'fund',
-    'fundIds':Object.keys(fundPurchaseInfo)
+    'fundIds':fundIds
   });
 };
 
