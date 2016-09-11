@@ -1,62 +1,62 @@
-$(function() {
+$(function () {
   if ($('#pageName').val() === 'fund') {
-    var lastElemStringify = function(array){
-      var lastElem  = array[array.length-1];
+    var lastElemStringify = function (array) {
+      var lastElem = array[array.length - 1];
       var result = '';
-      if(lastElem >= 0){
+      if (lastElem >= 0) {
         result = '+';
       }
       result += String(lastElem) + '%';
       return result;
     };
 
-    var percentagify = function(elem){
+    var percentagify = function (elem) {
       var result = '';
-      if(elem >= 0){
+      if (elem >= 0) {
         result = '+';
       }
       result += String(elem) + '%';
       return result;
     };
 
-    var setProfitRateStyleByArray = function(array,target){
-      if(array[array.length-1] < 0){
+    var setProfitRateStyleByArray = function (array, target) {
+      if (array[array.length - 1] < 0) {
         target.addClass('green');
         target.removeClass('red');
-      }else{
+      } else {
         target.addClass('red');
         target.removeClass('green');
       }
     };
 
-    var setProfitRateStyle = function(flag,target){
-      if(flag < 0){
+    var setProfitRateStyle = function (flag, target) {
+      if (flag < 0) {
         target.addClass('green');
         target.removeClass('red');
-      }else{
+      } else {
         target.addClass('red');
         target.removeClass('green');
       }
     };
 
-    var settingAccuracy = function(array, accuracy){
-      return _.map(array, function(elem){
+    var settingAccuracy = function (array, accuracy) {
+      return _.map(array, function (elem) {
         return elem.toFixed(accuracy);
       });
     };
 
-    $('#fund-id-list > .list-group-item').on('click', function(){
+    $('#fund-id-list > .list-group-item').on('click', function () {
       $('#fund-id-list > .list-group-item').removeClass('active');
       $(this).addClass('active');
       $.ajax({
-        url: '/api/v1/fund/'+this.innerHTML,
+        url: '/api/v1/fund/' + this.innerHTML,
         type: "get",
-      }).done(function(chartData) {
+      }).done(function (chartData) {
         // console.log(chartData);
 
-        chartData.userPrices = settingAccuracy(chartData.userPrices,4);
-        chartData.profitRates = settingAccuracy(chartData.profitRates,2);
-        chartData.profitsRatesPerYear = settingAccuracy(chartData.profitsRatesPerYear,2);
+        chartData.userPrices = settingAccuracy(chartData.userPrices, 4);
+        chartData.profitRates = settingAccuracy(chartData.profitRates, 2);
+        chartData.profitsRatesPerYear = settingAccuracy(chartData.profitsRatesPerYear, 2);
         chartData.overview.currentPrice = chartData.overview.currentPrice.toFixed(2);
         chartData.overview.rtProfitRate = chartData.overview.rtProfitRate.toFixed(2);
         chartData.overview.rtProfitRatePerYear = chartData.overview.rtProfitRatePerYear.toFixed(2);
@@ -69,15 +69,15 @@ $(function() {
         $('#currentPrice').html(chartData.overview.currentPrice);
         $('#profitRate').html(lastElemStringify(chartData.profitRates));
         $('#profitRatePerYear').html(lastElemStringify(chartData.profitsRatesPerYear));
-        $('#rtProfitRate').html(percentagify(chartData.overview.rtProfitRate) + ' ( ' + chartData.overview.rtTimeStamp +' )') ;
+        $('#rtProfitRate').html(percentagify(chartData.overview.rtProfitRate) + ' ( ' + chartData.overview.rtTimeStamp + ' )');
         $('#rtProfitRatePerYear').html(percentagify(chartData.overview.rtProfitRatePerYear));
 
-        setProfitRateStyleByArray(chartData.profitRates,$('#profitRate'));
-        setProfitRateStyleByArray(chartData.profitsRatesPerYear,$('#profitRatePerYear'));
-        setProfitRateStyle(chartData.rtProfitRate,$('#rtProfitRate'));
-        setProfitRateStyle(chartData.rtProfitRatePerYear,$('#rtProfitRatePerYear'));
+        setProfitRateStyleByArray(chartData.profitRates, $('#profitRate'));
+        setProfitRateStyleByArray(chartData.profitsRatesPerYear, $('#profitRatePerYear'));
+        setProfitRateStyle(chartData.rtProfitRate, $('#rtProfitRate'));
+        setProfitRateStyle(chartData.rtProfitRatePerYear, $('#rtProfitRatePerYear'));
 
-        if(chartData.overview.trading === false){
+        if (chartData.overview.trading === false) {
           $('#overview .trading').addClass('hide');
           $('#overview .untrading').removeClass('hide');
         }

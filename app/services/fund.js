@@ -3,14 +3,14 @@ const _ = require('underscore');
 const purchaseInfoModel = require('../models/purchaseInfo');
 const scrapModel = require('../models/scrap');
 const subscriptionFeeRates = {
-  '002656':0,
-  '160119':0,
-  '202015':0,
+  '002656': 0,
+  '160119': 0,
+  '202015': 0,
 };
 const redeemFeeRates = {
-  '002656':0.5,
-  '160119':0.5,
-  '202015':0.5,
+  '002656': 0.5,
+  '160119': 0.5,
+  '202015': 0.5,
 };
 
 /**
@@ -47,12 +47,11 @@ let getValueById = (fundId, userPurchaseInfo) => {
 
 let calcUserPirces = (dates, unitPrices, userPurchaseInfo, subscriptionFeeRate) => {
   let totalCost = 0, totalShare = 0;
-  //let subscriptionFeeRate = subscriptionFeeRates[fundId];
   let userPirces = [];
   for (let i = 0; i < unitPrices.length; i++) {
     if (userPurchaseInfo.hasOwnProperty(dates[i])) {
       totalCost += userPurchaseInfo[dates[i]];
-      totalShare += (userPurchaseInfo[dates[i]] * (1-subscriptionFeeRate/100) / unitPrices[i]);
+      totalShare += (userPurchaseInfo[dates[i]] * (1 - subscriptionFeeRate / 100) / unitPrices[i]);
     }
     userPirces.push(totalCost / totalShare);
   }
