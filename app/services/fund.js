@@ -100,12 +100,12 @@ let getChartDataById = (fundId) => {
   chartData.overview.currentPrice= (chartData.overview.totalCost * (1+chartData.profitRates[chartData.profitRates.length-1]/100)).toFixed(2);
 
   let realTimeData = scrap.getRealTimeInfoById(fundId);
-  chartData.fundName = realTimeData.name;
+  chartData.fundName = realTimeData.fundName;
   chartData.lastQuotedDate = chartData.dates[chartData.dates.length-1];
-  chartData.trading = !(realTimeData.gztime.slice(0,10) === chartData.lastQuotedDate);
-  chartData.rtUnitPrice = parseFloat(realTimeData.gsz).toFixed(4);
+  chartData.trading = !(realTimeData.estimatedTime.slice(0,10) === chartData.lastQuotedDate);
+  chartData.rtUnitPrice = parseFloat(realTimeData.estimatedValue).toFixed(4);
   chartData.rtProfitRate = ((chartData.rtUnitPrice-chartData.unitPrices[chartData.unitPrices.length-1])/chartData.unitPrices[chartData.unitPrices.length-1]*100).toFixed(2);
-  chartData.rtTimeStamp = realTimeData.gztime;
+  chartData.rtTimeStamp = realTimeData.estimatedTime;
   chartData.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0],chartData.dates[chartData.dates.length-1],parseFloat(chartData.profitRates[chartData.profitRates.length-1])+parseFloat(chartData.rtProfitRate));
 
   return chartData;
