@@ -2,7 +2,16 @@
 const _ = require('underscore');
 const purchaseInfoModel = require('../models/purchaseInfo');
 const scrapModel = require('../models/scrap');
-const redeemFeeRate = 0.5 / 100;
+const subscriptionFeeRates = {
+  '002656':0,
+  '160119':0,
+  '202015':0,
+};
+const redeemFeeRates = {
+  '002656':0.5,
+  '160119':0.5,
+  '202015':0.5,
+};
 
 /**
  * 将早于用户购买时期的基金净值信息删除
@@ -22,10 +31,6 @@ let filterUselessData = (webValueData, userPurchaseInfo) => {
   return webValueData;
 };
 
-let getPurchaseInfoById = (fundId) => {
-  return purchaseInfoModel.getFundPurchaseInfoById(fundId);
-};
-
 /**
  * 根据基金ID获取有效的基金净值（已排除非有效时段）
  * @param fundId 基金ID
@@ -40,13 +45,14 @@ let getValueById = (fundId, userPurchaseInfo) => {
   return filteredPurchaseData;
 };
 
-let calcUserPirces = (dates, unitPrices, userPurchaseInfo) => {
+let calcUserPirces = (dates, unitPrices, userPurchaseInfo, subscriptionFeeRate) => {
   let totalCost = 0, totalShare = 0;
+  //let subscriptionFeeRate = subscriptionFeeRates[fundId];
   let userPirces = [];
   for (let i = 0; i < unitPrices.length; i++) {
     if (userPurchaseInfo.hasOwnProperty(dates[i])) {
-      totalCost += parseFloat(userPurchaseInfo[dates[i]]);
-      totalShare += (parseFloat(userPurchaseInfo[dates[i]]) / unitPrices[i]);
+      totalCost += userPurchaseInfo[dates[i]];
+      totalShare += (userPurchaseInfo[dates[i]] * (1-subscriptionFeeRate/100) / unitPrices[i]);
     }
     userPirces.push(totalCost / totalShare);
   }
@@ -69,22 +75,22 @@ let calcProfitRates = (unitPrices, userPrices) => {
   return profitRates;
 };
 
-let calcProfitsRatePerYear = (dates, profitRates) => {
+let calcProfitsRatePerYear = (dates, profitRates, redeemFeeRate) => {
   let profitsRatesPerYear = [];
   profitsRatesPerYear.push(0);
   let firstDate = new Date(dates[0]);
   for (let i = 1; i < profitRates.length; i++) {
-    let redeemProfitRate = profitRates[i] / 100 - redeemFeeRate;
+    let redeemProfitRate = profitRates[i] - redeemFeeRate;
     let duration = (new Date(dates[i]) - firstDate) / 24 / 3600 / 1000;
-    profitsRatesPerYear.push(redeemProfitRate / duration * 365 * 100);
+    profitsRatesPerYear.push(redeemProfitRate / duration * 365);
   }
   return profitsRatesPerYear;
 };
 
-let calcRtProfitRatePerYear = (startDate, endDate, profitRate) => {
+let calcRtProfitRatePerYear = (startDate, endDate, profitRate, redeemFeeRate) => {
   let duration = (new Date(endDate) - new Date(startDate)) / 24 / 3600 / 1000;
-  let redeemProfitRate = profitRate / 100 - redeemFeeRate;
-  return redeemProfitRate / duration * 365 * 100;
+  let redeemProfitRate = profitRate - redeemFeeRate;
+  return redeemProfitRate / duration * 365;
 };
 
 let getChartDataById = (fundId) => {
@@ -97,9 +103,9 @@ let getChartDataById = (fundId) => {
   chartData.unitPrices = _.map(Object.keys(values), (date) => {
     return values[date];
   }).reverse();
-  chartData.userPrices = calcUserPirces(chartData.dates, chartData.unitPrices, userPurchaseInfo);
+  chartData.userPrices = calcUserPirces(chartData.dates, chartData.unitPrices, userPurchaseInfo, subscriptionFeeRates[fundId]);
   chartData.profitRates = calcProfitRates(chartData.unitPrices, chartData.userPrices);
-  chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates);
+  chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates, redeemFeeRates[fundId]);
   chartData.overview.totalCost = calcTotalCost(userPurchaseInfo);
   chartData.overview.currentPrice = chartData.overview.totalCost * (1 + chartData.profitRates[chartData.profitRates.length - 1] / 100);
 
@@ -110,7 +116,7 @@ let getChartDataById = (fundId) => {
   chartData.overview.rtUnitPrice = realTimeData.estimatedValue;
   chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - chartData.unitPrices[chartData.unitPrices.length - 1]) / chartData.unitPrices[chartData.unitPrices.length - 1] * 100;
   chartData.overview.rtTimeStamp = realTimeData.estimatedTime;
-  chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], chartData.dates[chartData.dates.length - 1], chartData.profitRates[chartData.profitRates.length - 1] + chartData.overview.rtProfitRate);
+  chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], chartData.dates[chartData.dates.length - 1], chartData.profitRates[chartData.profitRates.length - 1] + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
 
   return chartData;
 };
