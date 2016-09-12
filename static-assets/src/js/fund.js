@@ -74,8 +74,8 @@ $(function () {
 
         setProfitRateStyleByArray(chartData.profitRates, $('#profitRate'));
         setProfitRateStyleByArray(chartData.profitsRatesPerYear, $('#profitRatePerYear'));
-        setProfitRateStyle(chartData.rtProfitRate, $('#rtProfitRate'));
-        setProfitRateStyle(chartData.rtProfitRatePerYear, $('#rtProfitRatePerYear'));
+        setProfitRateStyle(chartData.overview.rtProfitRate, $('#rtProfitRate'));
+        setProfitRateStyle(chartData.overview.rtProfitRatePerYear, $('#rtProfitRatePerYear'));
 
         if (chartData.overview.trading === false) {
           $('#overview .trading').addClass('hide');
