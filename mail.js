@@ -1,15 +1,15 @@
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
 // create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport('smtps://15606617716@163.com:yy123456@smtp.163.com');
+let transporter = nodemailer.createTransport('smtps://15606617716@163.com:yy123456@smtp.163.com');
 
 // setup e-mail data with unicode symbols
-var mailOptions = {
-  from: '"15606617716@163.com 👥" <15606617716@163.com>', // sender address
+let mailOptions = {
+  from: '"网易邮箱 👥" <15606617716@163.com>', // sender address
   to: '394062113@qq.com', // list of receivers
   subject: 'Hello ✔', // Subject line
-  text: 'Hello world 🐴', // plaintext body
-  html: '<b>Hello world 🐴</b>' // html body
+  text: 'Useless but necessary content.', // plaintext body
+  html: '<b>Hello world ?html?</b>' // html body
 };
 
 // send mail with defined transport object
