@@ -52,7 +52,7 @@ $(function () {
         url: '/api/v1/fund/' + this.innerHTML,
         type: "get",
       }).done(function (chartData) {
-        // console.log(chartData);
+        console.log(chartData);
 
         chartData.userPrices = settingAccuracy(chartData.userPrices, 4);
         chartData.profitRates = settingAccuracy(chartData.profitRates, 2);
@@ -60,8 +60,6 @@ $(function () {
         chartData.overview.currentPrice = chartData.overview.currentPrice.toFixed(2);
         chartData.overview.rtProfitRate = chartData.overview.rtProfitRate.toFixed(2);
         chartData.overview.rtProfitRatePerYear = chartData.overview.rtProfitRatePerYear.toFixed(2);
-
-        console.log(chartData);
 
         $('#fundId').html(chartData.fundId);
         $('#fundName').html(chartData.overview.fundName);

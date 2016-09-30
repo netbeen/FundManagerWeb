@@ -28,9 +28,11 @@ let getFundValueById = (fundId) => {
  */
 let getRealTimeInfoById = (fundId) => {
   const realTimeInfoURL = `http://fundgz.1234567.com.cn/js/${fundId}.js`;
-  let rawResponse = syncRequest('GET', realTimeInfoURL).body.toString('utf-8');
-  let jsonRawResult = JSON.parse(rawResponse.slice(8, -2))
+  let rawResponse = syncRequest('GET', realTimeInfoURL).body.toString('utf-8').slice(8, -2);
+  if (rawResponse.length === 0) return {valid: false};
+  let jsonRawResult = JSON.parse(rawResponse);
   return {
+    valid: true,
     fundName: jsonRawResult.name,
     estimatedValue: parseFloat(jsonRawResult.gsz),
     estimatedTime: jsonRawResult.gztime

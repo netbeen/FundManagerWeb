@@ -3,14 +3,20 @@ const _ = require('underscore');
 const purchaseInfoModel = require('../models/purchaseInfo');
 const scrapModel = require('../models/scrap');
 const subscriptionFeeRates = {
+  '000071': 0.12,
+  '000930': 0,
   '002656': 0,
   '160119': 0,
   '202015': 0,
+  '202108': 0,
 };
 const redeemFeeRates = {
+  '000071': 0.5,
+  '000930': 0,
   '002656': 0.5,
   '160119': 0.5,
   '202015': 0.5,
+  '202108': 0.1,
 };
 
 /**
@@ -109,6 +115,11 @@ let getChartDataById = (fundId) => {
   chartData.overview.currentPrice = chartData.overview.totalCost * (1 + chartData.profitRates[chartData.profitRates.length - 1] / 100);
 
   let realTimeData = scrapModel.getRealTimeInfoById(fundId);
+  if(realTimeData.valid === false){
+    chartData.overview.rtInfoValid = false;
+    return chartData;
+  }
+  chartData.overview.rtInfoValid = true;
   chartData.overview.fundName = realTimeData.fundName;
   let lastQuotedDate = chartData.dates[chartData.dates.length - 1];
   chartData.overview.trading = !(realTimeData.estimatedTime.slice(0, 10) === lastQuotedDate);
