@@ -94,6 +94,9 @@ let calcProfitsRatePerYear = (dates, profitRates, redeemFeeRate) => {
 
 let calcRtProfitRatePerYear = (startDate, endDate, profitRate, redeemFeeRate) => {
   let duration = (new Date(endDate) - new Date(startDate)) / 24 / 3600 / 1000;
+  if(duration === 0){
+    duration = 0.001
+  }
   let redeemProfitRate = profitRate - redeemFeeRate;
   return redeemProfitRate / duration * 365;
 };
@@ -112,7 +115,7 @@ let getChartDataById = (fundId) => {
   chartData.profitRates = calcProfitRates(chartData.unitPrices, chartData.userPrices);
   chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates, redeemFeeRates[fundId]);
   chartData.overview.totalCost = calcTotalCost(userPurchaseInfo);
-  chartData.overview.currentPrice = chartData.overview.totalCost * (1 + chartData.profitRates[chartData.profitRates.length - 1] / 100);
+  chartData.overview.currentPrice = chartData.overview.totalCost * (1 + _.last(chartData.profitRates) / 100);
 
   let realTimeData = scrapModel.getRealTimeInfoById(fundId);
   if(realTimeData.valid === false){
@@ -121,12 +124,12 @@ let getChartDataById = (fundId) => {
   }
   chartData.overview.rtInfoValid = true;
   chartData.overview.fundName = realTimeData.fundName;
-  let lastQuotedDate = chartData.dates[chartData.dates.length - 1];
+  let lastQuotedDate = _.last(chartData.dates);
   chartData.overview.trading = !(realTimeData.estimatedTime.slice(0, 10) === lastQuotedDate);
   chartData.overview.rtUnitPrice = realTimeData.estimatedValue;
-  chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - chartData.unitPrices[chartData.unitPrices.length - 1]) / chartData.unitPrices[chartData.unitPrices.length - 1] * 100;
+  chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - _.last(chartData.unitPrices)) / _.last(chartData.unitPrices) * 100;
   chartData.overview.rtTimeStamp = realTimeData.estimatedTime;
-  chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], chartData.dates[chartData.dates.length - 1], chartData.profitRates[chartData.profitRates.length - 1] + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
+  chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], _.last(chartData.dates), _.last(chartData.profitRates) + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
 
   return chartData;
 };
