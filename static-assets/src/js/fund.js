@@ -58,8 +58,8 @@ $(function () {
         chartData.profitRates = settingAccuracy(chartData.profitRates, 2);
         chartData.profitsRatesPerYear = settingAccuracy(chartData.profitsRatesPerYear, 2);
         chartData.overview.currentPrice = chartData.overview.currentPrice.toFixed(2);
-        chartData.overview.rtProfitRate = chartData.overview.rtProfitRate.toFixed(2);
-        chartData.overview.rtProfitRatePerYear = chartData.overview.rtProfitRatePerYear.toFixed(2);
+        chartData.overview.rtProfitRate = chartData.overview.valid?chartData.overview.rtProfitRate.toFixed(2):'null';
+        chartData.overview.rtProfitRatePerYear = chartData.overview.valid?chartData.overview.rtProfitRatePerYear.toFixed(2):'null';
 
         $('#fundId').html(chartData.fundId);
         $('#fundName').html(chartData.overview.fundName);
