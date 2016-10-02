@@ -85,6 +85,33 @@ $(function () {
         var userPrices = chartData.userPrices;
         var profitRates = chartData.profitRates;
         var profitsRatesPerYear = chartData.profitsRatesPerYear;
+        var toolboxConfig = {
+          show: true,
+          feature: {
+            dataView: {
+              show: true,
+              readOnly: false
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        };
+        var markPointConfig = {
+          data: [{
+            symbolSize: 60,
+            type: 'max',
+            name: '最大值'
+          },
+            {
+              symbolSize: 60,
+              type: 'min',
+              name: '最小值'
+            }]
+        };
         var priceCompareOption = {
           title: {
             text: '成本净值对比图',
@@ -96,21 +123,7 @@ $(function () {
           legend: {
             data: ['单位净值', '持仓成本']
           },
-          toolbox: {
-            show: true,
-            feature: {
-              dataView: {
-                show: true,
-                readOnly: false
-              },
-              restore: {
-                show: true
-              },
-              saveAsImage: {
-                show: true
-              }
-            }
-          },
+          toolbox: toolboxConfig,
           calculable: true,
           xAxis: [{
             type: 'category',
@@ -125,18 +138,7 @@ $(function () {
             name: '单位净值',
             type: 'line',
             data: unitPrices,
-            markPoint: {
-              data: [{
-                symbolSize: 60,
-                type: 'max',
-                name: '最大值'
-              },
-                {
-                  symbolSize: 60,
-                  type: 'min',
-                  name: '最小值'
-                }]
-            },
+            markPoint: markPointConfig,
             markLine: {
               data: [{
                 type: 'average',
@@ -148,18 +150,7 @@ $(function () {
               name: '持仓成本',
               type: 'line',
               data: userPrices,
-              markPoint: {
-                data: [{
-                  symbolSize: 60,
-                  type: 'max',
-                  name: '最大值'
-                },
-                  {
-                    symbolSize: 60,
-                    type: 'min',
-                    name: '最小值'
-                  }]
-              }
+              markPoint: markPointConfig
             }]
         };
         var profitRateOption = {
@@ -174,21 +165,7 @@ $(function () {
           legend: {
             data: ['收益率%']
           },
-          toolbox: {
-            show: true,
-            feature: {
-              dataView: {
-                show: true,
-                readOnly: false
-              },
-              restore: {
-                show: true
-              },
-              saveAsImage: {
-                show: true
-              }
-            }
-          },
+          toolbox: toolboxConfig,
           calculable: true,
           xAxis: [{
             show: false,
@@ -219,18 +196,7 @@ $(function () {
                 }
                 ]]
             },
-            markPoint: {
-              data: [{
-                symbolSize: 60,
-                type: 'max',
-                name: '最大值'
-              },
-                {
-                  symbolSize: 60,
-                  type: 'min',
-                  name: '最小值'
-                }]
-            },
+            markPoint: markPointConfig,
           }]
         };
 
@@ -246,21 +212,7 @@ $(function () {
           legend: {
             data: ['赎回年化收益率%']
           },
-          toolbox: {
-            show: true,
-            feature: {
-              dataView: {
-                show: true,
-                readOnly: false
-              },
-              restore: {
-                show: true
-              },
-              saveAsImage: {
-                show: true
-              }
-            }
-          },
+          toolbox: toolboxConfig,
           calculable: true,
           xAxis: [{
             show: false,
@@ -292,19 +244,7 @@ $(function () {
                   }
                   ]]
               },
-
-              markPoint: {
-                data: [{
-                  symbolSize: 60,
-                  type: 'max',
-                  name: '最大值'
-                },
-                  {
-                    type: 'min',
-                    symbolSize: 60,
-                    name: '最小值'
-                  }]
-              },
+              markPoint: markPointConfig
             }]
         };
 

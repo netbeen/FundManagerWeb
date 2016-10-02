@@ -82,11 +82,11 @@ let calcProfitRates = (unitPrices, userPrices) => {
 
 let calcProfitsRatePerYear = (dates, profitRates, redeemFeeRate) => {
   let profitsRatesPerYear = [];
-  profitsRatesPerYear.push(0);
   let firstDate = new Date(dates[0]);
-  for (let i = 1; i < profitRates.length; i++) {
+  for (let i = 0; i < profitRates.length; i++) {
     let redeemProfitRate = profitRates[i] - redeemFeeRate;
     let duration = (new Date(dates[i]) - firstDate) / 24 / 3600 / 1000;
+    duration = duration === 0 ? 1 : duration;
     profitsRatesPerYear.push(redeemProfitRate / duration * 365);
   }
   return profitsRatesPerYear;
@@ -94,7 +94,7 @@ let calcProfitsRatePerYear = (dates, profitRates, redeemFeeRate) => {
 
 let calcRtProfitRatePerYear = (startDate, endDate, profitRate, redeemFeeRate) => {
   let duration = (new Date(endDate) - new Date(startDate)) / 24 / 3600 / 1000;
-  if(duration === 0){
+  if (duration === 0) {
     duration = 0.001
   }
   let redeemProfitRate = profitRate - redeemFeeRate;
@@ -118,7 +118,7 @@ let getChartDataById = (fundId) => {
   chartData.overview.currentPrice = chartData.overview.totalCost * (1 + _.last(chartData.profitRates) / 100);
 
   let realTimeData = scrapModel.getRealTimeInfoById(fundId);
-  if(realTimeData.valid === false){
+  if (realTimeData.valid === false) {
     chartData.overview.rtInfoValid = false;
     return chartData;
   }
