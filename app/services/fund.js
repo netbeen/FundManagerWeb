@@ -119,6 +119,7 @@ let getChartDataById = (fundId) => {
 
   let realTimeData = scrapModel.getRealTimeInfoById(fundId);
   if (realTimeData.valid === false) {
+    chartData.overview.fundName = scrapModel.fetchFundNameById(fundId)
     chartData.overview.rtInfoValid = false;
     return chartData;
   }

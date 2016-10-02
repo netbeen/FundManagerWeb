@@ -39,7 +39,14 @@ let getRealTimeInfoById = (fundId) => {
   };
 };
 
+let fetchFundNameById = (fundId) => {
+  const URL = `http://fund.eastmoney.com/${fundId}.html`;
+  let content = syncRequest('GET', URL).body.toString('utf-8')
+  return content.split('<span class="funCur-FundName">')[1].split('</span>')[0];
+};
+
 module.exports = {
   getFundValueById: getFundValueById,
-  getRealTimeInfoById: getRealTimeInfoById
+  getRealTimeInfoById: getRealTimeInfoById,
+  fetchFundNameById: fetchFundNameById
 };
