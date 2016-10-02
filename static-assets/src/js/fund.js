@@ -49,7 +49,7 @@ $(function () {
       $('#fund-id-list > .list-group-item').removeClass('active');
       $(this).addClass('active');
       $.ajax({
-        url: '/api/v1/fund/' + this.innerHTML,
+        url: '/api/v1/fund/' + $(this).attr('value'),
         type: "get",
       }).done(function (chartData) {
         console.log(chartData);

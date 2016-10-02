@@ -4,7 +4,8 @@ block content
         .row
             .col-md-2#fund-id-list
                 each fundId in fundIds
-                    .list-group-item #{fundId}
+                    .list-group-item(value=fundId) #{fundId}
+                        //span.label.label-success Success
             .col-md-10
                 #overview
                     .row
