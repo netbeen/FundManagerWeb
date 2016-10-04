@@ -46,7 +46,6 @@ $(function () {
             }];
           }
         });
-
       });
 
 
@@ -134,7 +133,7 @@ $(function () {
           },
           {
             name: '百分比(%)',
-            type: 'value'
+            type: 'value',
           }
         ],
         series: distributionChartOptionSeries
