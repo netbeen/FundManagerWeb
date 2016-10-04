@@ -70,7 +70,6 @@ $(function () {
       let distributionChartOptionLegendData = ['总金额'];
 
       _.each(Object.keys(distributionPercentage),(keyName)=>{
-        console.log('keyName',keyName);
         distributionChartOptionSeries.push({
           name:keyName+'%',
           type:'line',
