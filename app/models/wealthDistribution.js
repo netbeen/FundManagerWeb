@@ -5,7 +5,7 @@ sqlite.connect('./data/database.db');
 // console.log(sqlite.run('select * from distribute'));
 
 let getDistribution = () => {
-  return sqlite.run('select * from distribute');
+  return sqlite.run('select * from distribution');
 };
 
 module.exports = {
