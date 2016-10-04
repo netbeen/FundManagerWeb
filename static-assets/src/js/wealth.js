@@ -25,7 +25,6 @@ $(function () {
               distribution[key].push(elem[key]);
             }else{
               distribution[key] = [elem[key]];
-
             }
           }
         });
