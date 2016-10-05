@@ -13,6 +13,8 @@ router.get('/api/v1/fund/:id',apiFundController.getGraphInfo);
 router.get('/api/v1/fundIds',apiFundController.getFundIds);
 
 router.get('/api/v1/wealthDistribution',apiWealthController.getWealthDistribution);
+router.get('/api/v1/wealthType',apiWealthController.getTypes);
+
 
 
 module.exports = router;
