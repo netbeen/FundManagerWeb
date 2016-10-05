@@ -146,30 +146,24 @@ $(function () {
         _.each(typeObjs, (typeObj) => {
           if(!(typeObj.type in typeMap)){
             typeMap[typeObj.type] = [typeObj.target];
-            legendData.push(typeObj.type);
-            legendData.push(typeObj.target);
           }else{
             typeMap[typeObj.type].push(typeObj.target);
-            legendData.push(typeObj.target);
           }
         });
-        console.log('typeMap',typeMap);
-        console.log('legendData',legendData);
 
         let typePieData = [];
         let targetPieData = [];
-        console.log(Object.keys(typeMap));
         _.each(Object.keys(typeMap),(type)=>{
-          console.log('type',type);
+          legendData.push(type);
           let currentTypeTotal = 0;
           _.each(Object.keys(typeMap[type]),(target)=>{
-            console.log('target',typeMap[type][target]);
-            console.log(_.last(distribution[typeMap[type][target]]));
+            legendData.push(typeMap[type][target]);
             currentTypeTotal += _.last(distribution[typeMap[type][target]]);
             targetPieData.push({value:_.last(distribution[typeMap[type][target]]), name:typeMap[type][target]});
           })
           typePieData.push({value:currentTypeTotal, name:type});
         });
+
 
         let pieOption = {
           title : {
@@ -185,7 +179,7 @@ $(function () {
           legend: {
             orient: 'vertical',
             x: 'left',
-            bottom: '15%',
+            bottom: '24%',
             data:legendData
           },
           series: [
