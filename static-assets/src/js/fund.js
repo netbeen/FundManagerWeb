@@ -58,8 +58,8 @@ $(function () {
         chartData.profitRates = settingAccuracy(chartData.profitRates, 2);
         chartData.profitsRatesPerYear = settingAccuracy(chartData.profitsRatesPerYear, 2);
         chartData.overview.currentPrice = chartData.overview.currentPrice.toFixed(2);
-        chartData.overview.rtProfitRate = chartData.overview.valid?chartData.overview.rtProfitRate.toFixed(2):'null';
-        chartData.overview.rtProfitRatePerYear = chartData.overview.valid?chartData.overview.rtProfitRatePerYear.toFixed(2):'null';
+        chartData.overview.rtProfitRate = chartData.overview.rtInfoValid?chartData.overview.rtProfitRate.toFixed(2):'null';
+        chartData.overview.rtProfitRatePerYear = chartData.overview.rtInfoValid?chartData.overview.rtProfitRatePerYear.toFixed(2):'null';
 
         $('#fundId').html(chartData.fundId);
         $('#fundName').html(chartData.overview.fundName);
@@ -75,7 +75,10 @@ $(function () {
         setProfitRateStyle(chartData.overview.rtProfitRate, $('#rtProfitRate'));
         setProfitRateStyle(chartData.overview.rtProfitRatePerYear, $('#rtProfitRatePerYear'));
 
-        if (chartData.overview.trading === false) {
+        if (chartData.overview.trading === true) {
+          $('#overview .trading').removeClass('hide');
+          $('#overview .untrading').addClass('hide');
+        }else{
           $('#overview .trading').addClass('hide');
           $('#overview .untrading').removeClass('hide');
         }
