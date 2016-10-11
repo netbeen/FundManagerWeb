@@ -115,14 +115,18 @@ $(function () {
               name: '最小值'
             }]
         };
+        let tooltipConfig = {
+          trigger: 'axis',
+          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          }
+        };
         var priceCompareOption = {
           title: {
             text: '成本净值对比图',
             subtext: chartData.fundId
           },
-          tooltip: {
-            trigger: 'axis'
-          },
+          tooltip: tooltipConfig,
           legend: {
             data: ['单位净值', '持仓成本']
           },
@@ -162,9 +166,7 @@ $(function () {
             text: '收益率示意图',
             subtext: chartData.fundId
           },
-          tooltip: {
-            trigger: 'axis'
-          },
+          tooltip: tooltipConfig,
           legend: {
             data: ['收益率%']
           },
@@ -209,9 +211,7 @@ $(function () {
             text: '年化收益率示意图',
             subtext: chartData.fundId
           },
-          tooltip: {
-            trigger: 'axis'
-          },
+          tooltip: tooltipConfig,
           legend: {
             data: ['赎回年化收益率%']
           },
