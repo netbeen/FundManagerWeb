@@ -93,7 +93,7 @@ let calcProfitsRatePerYear = (dates, profitRates, redeemFeeRate) => {
 };
 
 let calcRtProfitRatePerYear = (startDate, endDate, profitRate, redeemFeeRate) => {
-  let duration = (new Date(endDate) - new Date(startDate)) / 24 / 3600 / 1000;
+  let duration = (new Date(endDate) - new Date(startDate)) / 24 / 3600 / 1000 + 1;
   if (duration === 0) {
     duration = 0.001
   }
