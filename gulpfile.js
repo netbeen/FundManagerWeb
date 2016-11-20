@@ -39,21 +39,21 @@ gulp.task("clean", function() {
 });
 
 gulp.task('cssLib', function() {
-  var cssFilter = (/(.*\.(css|map)$|multiple-select.png)/i);
+  let cssFilter = (/(.*\.(css|map)$|multiple-select.png)/i);
   return gulp.src(mainFiles({
     filter: cssFilter
   })).pipe(gulp.dest(distPaths.css_root));
 });
 
 gulp.task('jsLib', function() {
-  var jsFilter = (/.*\.js$/i);
+  let jsFilter = (/.*\.js$/i);
   return gulp.src(mainFiles({
     filter: jsFilter
   })).pipe(gulp.dest(distPaths.js_root));
 });
 
 gulp.task('cssLibDependentImages', function() {
-  var cssFilter = (/(.*\.png$)/i);
+  let cssFilter = (/(.*\.png$)/i);
   return gulp.src(mainFiles({
     filter: cssFilter
   })).pipe(gulp.dest(distPaths.css_images_root));
@@ -75,7 +75,7 @@ gulp.task("js", function() {
 });
 
 gulp.task("build", ["clean"], function() {
-  var deferred = Q.defer();
+  let deferred = Q.defer();
   runSequence('bower', ['cssLib', 'cssLibDependentImages', 'jsLib'], ["stylus", "js", "images", "css"], function(err) {
     if(err){
       deferred.reject(err);
