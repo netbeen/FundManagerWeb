@@ -76,7 +76,7 @@ let process = () => {
       continue;
     }
     let displayRtProfitRatePerYear = chartData.overview.rtProfitRatePerYear<0?chartData.overview.rtProfitRatePerYear.toFixed(2).green:chartData.overview.rtProfitRatePerYear.toFixed(2).red;
-    console.log(id,chartData.overview.fundName,'当前实时年化收益率：',displayRtProfitRatePerYear,'%');
+    console.log(id,chartData.overview.fundName,'当前实时年化收益率: ',displayRtProfitRatePerYear,'%');
     if(chartData.overview.rtProfitRatePerYear > rtProfitRatePerYearThreshhold[id]){
       console.log('收益率达到阈值');
       ifSendMail = true;
