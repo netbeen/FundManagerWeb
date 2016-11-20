@@ -102,4 +102,4 @@ setInterval(()=> {
   if(isTheTime()){
     process();
   }
-},1000);
+},31000);
