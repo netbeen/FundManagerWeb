@@ -18,7 +18,13 @@ let getTimestampString = () => {
   let hours = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
   let minutes = now.getMinutes() < 10 ? '0'+now.getMinutes() : now.getMinutes();
   let seconds = now.getSeconds() < 10 ? '0'+now.getSeconds() : now.getSeconds();
-  return now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+hours+':'+minutes+':'+seconds+' '+now.getMilliseconds()
+  let milliSeconds = now.getMilliseconds()+'';
+  if(milliSeconds.length === 1){
+    milliSeconds = '00'+milliSeconds;
+  }else if(milliSeconds.length === 2){
+    milliSeconds = '0'+milliSeconds;
+  }
+  return now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+hours+':'+minutes+':'+seconds+'.'+milliSeconds;
 };
 
 let isTheTime = () => {
