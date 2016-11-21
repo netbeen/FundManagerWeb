@@ -15,7 +15,10 @@ const rtProfitRatePerYearThreshhold = {
 
 let getTimestampString = () => {
   let now = new Date(Date.now());
-  return now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+now.getHours()+':'+now.getMonth()+':'+now.getSeconds()+' '+now.getMilliseconds()
+  let hours = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
+  let minutes = now.getMinutes() < 10 ? '0'+now.getMinutes() : now.getMinutes();
+  let seconds = now.getSeconds() < 10 ? '0'+now.getSeconds() : now.getSeconds();
+  return now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+hours+':'+minutes+':'+seconds+' '+now.getMilliseconds()
 };
 
 let isTheTime = () => {
@@ -71,14 +74,14 @@ let process = () => {
       continue;
     }
     let day = chartData.overview.rtTimeStamp.split(' ')[0].split('-')[2];
-    if(parseInt(now.getDay()) !== parseInt(day)){
+    if(parseInt(now.getDate()) !== parseInt(day)){
       console.log(id,chartData.overview.fundName,'当前时间为非交易时间');
       continue;
     }
     let displayRtProfitRatePerYear = chartData.overview.rtProfitRatePerYear<0?chartData.overview.rtProfitRatePerYear.toFixed(2).green:chartData.overview.rtProfitRatePerYear.toFixed(2).red;
     console.log(id,chartData.overview.fundName,'当前实时年化收益率: ',displayRtProfitRatePerYear,'%');
     if(chartData.overview.rtProfitRatePerYear > rtProfitRatePerYearThreshhold[id]){
-      console.log('收益率达到阈值');
+      console.log('收益率达到阈值'.red);
       ifSendMail = true;
       mailData.push({
         id: id,
@@ -86,7 +89,6 @@ let process = () => {
         rtProfitRatePerYear: chartData.overview.rtProfitRatePerYear
       });
     }else{
-      console.log('收益率未达到阈值');
     }
   }
   if(ifSendMail){
