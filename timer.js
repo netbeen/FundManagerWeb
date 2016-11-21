@@ -3,6 +3,7 @@ const colors = require('colors');
 const nodemailer = require('nodemailer');
 const fundService = require('./app/services/fund');
 const purchaseInfoModel = require('./app/models/purchaseInfo');
+const schedule = require('node-schedule');
 
 const rtProfitRatePerYearThreshold = {
   '000071':15.0,
@@ -25,11 +26,6 @@ let getTimestampString = () => {
     milliSeconds = '0'+milliSeconds;
   }
   return now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+hours+':'+minutes+':'+seconds+'.'+milliSeconds;
-};
-
-let isTheTime = () => {
-  let now = new Date(Date.now());
-  return now.getHours() === 14 && now.getMinutes() === 45;
 };
 
 let getFundIds = () => {
@@ -106,8 +102,9 @@ let process = () => {
 
 process();
 
-setInterval(()=> {
-  if(isTheTime()){
-    process();
-  }
-},31000);
+let rule = new schedule.RecurrenceRule();
+rule.hour = 14;
+rule.minute = 45;
+schedule.scheduleJob(rule, function(){
+  process();
+});

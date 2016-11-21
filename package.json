@@ -37,6 +37,7 @@
     "koa-pug": ">=3.0.0-0",
     "koa-router": ">=7.0.1",
     "main-bower-files": ">=2.13.1",
+    "node-schedule": "^1.2.0",
     "nodemailer": "^2.6.4",
     "pug": ">=2.0.0-beta6",
     "q": ">=2.0.3",
