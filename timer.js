@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 const fundService = require('./app/services/fund');
 const purchaseInfoModel = require('./app/models/purchaseInfo');
 
-const rtProfitRatePerYearThreshhold = {
+const rtProfitRatePerYearThreshold = {
   '000071':15.0,
   '000930':13.0,
   '002656':15.0,
@@ -80,7 +80,7 @@ let process = () => {
     }
     let displayRtProfitRatePerYear = chartData.overview.rtProfitRatePerYear<0?chartData.overview.rtProfitRatePerYear.toFixed(2).green:chartData.overview.rtProfitRatePerYear.toFixed(2).red;
     console.log(id,chartData.overview.fundName,'当前实时年化收益率: ',displayRtProfitRatePerYear,'%');
-    if(chartData.overview.rtProfitRatePerYear > rtProfitRatePerYearThreshhold[id]){
+    if(chartData.overview.rtProfitRatePerYear > rtProfitRatePerYearThreshold[id]){
       console.log('收益率达到阈值'.red);
       ifSendMail = true;
       mailData.push({
