@@ -2,11 +2,11 @@
 const wealthDistributionModel = require('../../models/wealthDistribution');
 
 
-let getWealthDistribution = async (ctx, next) => {
+let getWealthDistribution = async (ctx) => {
   ctx.body = wealthDistributionModel.getDistribution();
 };
 
-let getTypes = async (ctx, next) => {
+let getTypes = async (ctx) => {
   ctx.body = wealthDistributionModel.getTypes();
 };
 
