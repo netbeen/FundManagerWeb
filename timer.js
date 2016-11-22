@@ -16,11 +16,11 @@ const rtProfitRatePerYearThreshold = {
 
 const MININUM_HOLDING_DAYS = 90;
 
-let getTimestampString = () => {
-  let now = new Date(Date.now());
-  let hours = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
-  let minutes = now.getMinutes() < 10 ? '0'+now.getMinutes() : now.getMinutes();
-  let seconds = now.getSeconds() < 10 ? '0'+now.getSeconds() : now.getSeconds();
+const getTimestampString = () => {
+  const now = new Date(Date.now());
+  const hours = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
+  const minutes = now.getMinutes() < 10 ? '0'+now.getMinutes() : now.getMinutes();
+  const seconds = now.getSeconds() < 10 ? '0'+now.getSeconds() : now.getSeconds();
   let milliSeconds = now.getMilliseconds()+'';
   if(milliSeconds.length === 1){
     milliSeconds = '00'+milliSeconds;
@@ -30,34 +30,28 @@ let getTimestampString = () => {
   return now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate()+' '+hours+':'+minutes+':'+seconds+'.'+milliSeconds;
 };
 
-let getFundIds = () => {
+const getFundIds = () => {
   return purchaseInfoModel.getFundIds();
 };
 
-let sendEmail = (content) => {
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport('smtps://15606617716@163.com:yy123456@smtp.163.com');
-
-  // setup e-mail data with unicode symbols
-  let mailOptions = {
+const sendEmail = (content) => {
+  const transporter = nodemailer.createTransport('smtps://15606617716@163.com:yy123456@smtp.163.com');
+  const mailOptions = {
     from: '"网易邮箱 👥" <15606617716@163.com>',
     to: '394062113@qq.com',
     subject: '基金收益率达标 ✔',
     text: content, // plaintext body
     html: content // html body
   };
-
-  // send mail with defined transport object
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
       return console.log(error);
     }
     console.log('Message sent: ' + info.response);
   });
-
 };
 
-let renderEmail = (mailData) => {
+const renderEmail = (mailData) => {
   let renderResult = '';
   for(let elem of mailData){
     renderResult += '['+elem.id+' '+elem.name+'] 已经达到收益预期，实时年化收益率为'+elem.rtProfitRatePerYear.toFixed(2)+'%<br/><br/>';
@@ -65,14 +59,14 @@ let renderEmail = (mailData) => {
   return renderResult;
 };
 
-let process = () => {
-  let now = new Date(Date.now());
+const process = () => {
+  const now = new Date(Date.now());
   console.log(getTimestampString().black.bgWhite);
   let ids = getFundIds();
   let ifSendMail = false;
   let mailData = [];
   for (let id of ids){
-    let chartData = fundService.getChartDataById(id);
+    const chartData = fundService.getChartDataById(id);
     if(!chartData.overview.rtInfoValid){
       console.log(id,chartData.overview.fundName,'无法获取实时信息');
       continue;
@@ -105,7 +99,7 @@ let process = () => {
     }
   }
   if(ifSendMail){
-    let renderedMail = renderEmail(mailData);
+    const renderedMail = renderEmail(mailData);
     console.log(renderedMail);
     sendEmail(renderedMail);
   }
