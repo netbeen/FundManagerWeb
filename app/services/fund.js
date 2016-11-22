@@ -47,8 +47,7 @@ let filterUselessData = (webValueData, userPurchaseInfo) => {
  */
 let getValueById = (fundId, userPurchaseInfo) => {
   let webValueData = scrapModel.getFundValueById(fundId);
-  let filteredPurchaseData = filterUselessData(webValueData, userPurchaseInfo);
-  return filteredPurchaseData;
+  return filterUselessData(webValueData, userPurchaseInfo);
 };
 
 let calcUserPirces = (dates, unitPrices, userPurchaseInfo, subscriptionFeeRate) => {
@@ -119,7 +118,7 @@ let getChartDataById = (fundId) => {
 
   let realTimeData = scrapModel.getRealTimeInfoById(fundId);
   if (realTimeData.valid === false) {
-    chartData.overview.fundName = scrapModel.fetchFundNameById(fundId)
+    chartData.overview.fundName = scrapModel.fetchFundNameById(fundId);
     chartData.overview.rtInfoValid = false;
     return chartData;
   }
