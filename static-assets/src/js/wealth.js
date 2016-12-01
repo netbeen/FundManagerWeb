@@ -205,7 +205,6 @@ $(function () {
               name:'资产分布',
               type:'pie',
               radius: ['45%', '60%'],
-
               data:targetPieData
             }
           ]
