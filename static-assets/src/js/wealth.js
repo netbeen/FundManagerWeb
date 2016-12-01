@@ -131,7 +131,7 @@ $(function () {
         ],
         series: distributionChartOptionSeries
       };
-      var distributionChart = echarts.init(document.getElementById('wealthDistribution'));
+      var distributionChart = echarts.init(document.getElementById('wealthDistribution'),'shine');
       distributionChart.setOption(distributionChartOption);
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,7 +210,7 @@ $(function () {
             }
           ]
         };
-        var distributionPieChart = echarts.init(document.getElementById('currentDistributionPie'));
+        var distributionPieChart = echarts.init(document.getElementById('currentDistributionPie'),'shine');
         distributionPieChart.setOption(pieOption);
       });
     });
