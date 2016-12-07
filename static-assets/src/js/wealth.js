@@ -63,7 +63,15 @@ $(function () {
             width: 5,
           },
         },
-        data:total
+        data:total,
+        markArea: {
+          silent: true,
+          data: [[{
+            xAxis: '2015/12/31\n7:00'
+          }, {
+            xAxis: '2016/12/31\n7:00'
+          }]]
+        },
       }];
       let distributionChartOptionLegendData = ['总金额'];
 
