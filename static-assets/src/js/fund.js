@@ -1,5 +1,6 @@
 $(function () {
   if ($('#pageName').val() === 'fund') {
+
     var lastElemStringify = function (array) {
       var lastElem = array[array.length - 1];
       var result = '';
@@ -53,6 +54,16 @@ $(function () {
         type: "get",
       }).done(function (chartData) {
         console.log(chartData);
+
+        $('#pruchaseInfoButton').on('click',() => {
+          $('.base').html(chartData.overview.base);
+          let deficit = chartData.overview.totalCost - parseFloat(chartData.overview.currentPrice)
+          deficit = deficit > 0 ? deficit:0;
+          $('.deficit').html(deficit.toFixed(2));
+          let total = chartData.overview.base + (deficit*2);
+          $('.total').html(total.toFixed(2));
+          $('#purchaseInfoModal').modal('show');
+        });
 
         chartData.userPrices = settingAccuracy(chartData.userPrices, 4);
         chartData.profitRates = settingAccuracy(chartData.profitRates, 2);

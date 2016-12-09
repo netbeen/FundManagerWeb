@@ -123,6 +123,7 @@ let getChartDataById = (fundId) => {
   chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates, redeemFeeRates[fundId]);
   chartData.overview.totalCost = calcTotalCost(userPurchaseInfo);
   chartData.overview.currentPrice = chartData.overview.totalCost * (1 + _.last(chartData.profitRates) / 100);
+  chartData.overview.base = base[fundId];
 
   let realTimeData = scrapModel.getRealTimeInfoById(fundId);
   if (realTimeData.valid === false) {
@@ -138,7 +139,6 @@ let getChartDataById = (fundId) => {
   chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - _.last(chartData.unitPrices)) / _.last(chartData.unitPrices) * 100;
   chartData.overview.rtTimeStamp = realTimeData.estimatedTime;
   chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], _.last(chartData.dates), _.last(chartData.profitRates) + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
-  chartData.overview.base = base[fundId];
   return chartData;
 };
 

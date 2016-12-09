@@ -30,7 +30,7 @@ block content
                                 div.label 年化收益
                                 #profitRatePerYear.content
                             .row
-                                button 购买信息
+                                button#pruchaseInfoButton.btn.btn-default 查看本期投资额度
                         .col-md-3
                             .row.trading
                                 div.label 当日涨跌
@@ -43,3 +43,28 @@ block content
                 #priceCompare
                 #profitRateCompare
                 #profitRatePerYearCompare
+
+    #purchaseInfoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                    h4#myModalLabel.modal-title 本期投资额度
+                .modal-body
+                    .item
+                        .title 投资基数
+                        .data.base
+                    .separator +
+                    .separator (
+                    .item
+                        .title 亏损金额
+                        .data.deficit
+                    .separator *
+                    .item
+                        .title 追加倍数
+                        .data 2
+                    .separator )
+                    .separator =
+                    .item
+                        .title 本期应投
+                        .data.total
