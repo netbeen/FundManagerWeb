@@ -1,11 +1,10 @@
 extends layout
 block content
-    .container
+    .container-fluid
         .row
             .col-md-2#fund-id-list
                 each fundId in fundIds
                     .list-group-item(value=fundId) #{fundId}
-                        //span.label.label-success Success
             .col-md-10
                 #overview
                     .row
@@ -30,6 +29,8 @@ block content
                             .row
                                 div.label 年化收益
                                 #profitRatePerYear.content
+                            .row
+                                button 购买信息
                         .col-md-3
                             .row.trading
                                 div.label 当日涨跌

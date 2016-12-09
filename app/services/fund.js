@@ -18,6 +18,14 @@ const redeemFeeRates = {
   '202015': 0.5,
   '202108': 0.1,
 };
+const base = {
+  '000071': 1000,
+  '000930': 1000,
+  '002656': 1000,
+  '160119': 1000,
+  '202015': 1060,
+  '202108': 1000,
+};
 
 /**
  * 将早于用户购买时期的基金净值信息删除
@@ -130,7 +138,7 @@ let getChartDataById = (fundId) => {
   chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - _.last(chartData.unitPrices)) / _.last(chartData.unitPrices) * 100;
   chartData.overview.rtTimeStamp = realTimeData.estimatedTime;
   chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], _.last(chartData.dates), _.last(chartData.profitRates) + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
-
+  chartData.overview.base = base[fundId];
   return chartData;
 };
 
