@@ -1,19 +1,16 @@
 $(function () {
   if ($('#pageName').val() === 'wealth') {
 
-    // console.log('wealth');
-
     $.ajax({
       url: '/api/v1/wealthDistribution',
       type: "get",
     }).done(function (data) {
-      // console.log(data);
       let total = [];
       let distribution = {};
       let distributionPercentage = {};
       let datesEchartFormat = [];
 
-      //遍历ajax请求所获取的数组信息
+      // 遍历ajax请求所获取的数组信息
       _.each(data,function(elem){
         const currentDate = new Date(elem['日期']);
         datesEchartFormat.push([currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate()].join('/'));
