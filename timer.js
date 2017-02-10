@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const fundService = require('./app/services/fund');
 const purchaseInfoModel = require('./app/models/purchaseInfo');
 const schedule = require('node-schedule');
+var Table = require('cli-table');
 
 const rtProfitRatePerYearThreshold = {
   '000071':15.0,
@@ -65,19 +66,34 @@ const process = () => {
   let ids = getFundIds();
   let ifSendMail = false;
   let mailData = [];
+  let consoleResultData = [];
+
+  var table = new Table({
+    head: ['ID', 'RTPPY', 'Name'],
+    colWidths: [8, 10, 26]
+  });
+
   for (let id of ids){
     const chartData = fundService.getChartDataById(id);
+
+    let consoleResultItem = [id,chartData.overview.fundName];
+    table.push(consoleResultItem);
+    consoleResultData.push(consoleResultItem);
+
     if(!chartData.overview.rtInfoValid){
       console.log(id,chartData.overview.fundName,'无法获取实时信息');
+      consoleResultItem.splice(1, 0, 'NRT');
       continue;
     }
     let day = chartData.overview.rtTimeStamp.split(' ')[0].split('-')[2];
     if(parseInt(now.getDate()) !== parseInt(day)){
       console.log(id,chartData.overview.fundName,'当前时间为非交易时间');
+      consoleResultItem.splice(1, 0, 'NT');
       continue;
     }
     let displayRtProfitRatePerYear = chartData.overview.rtProfitRatePerYear<0?chartData.overview.rtProfitRatePerYear.toFixed(2).green:chartData.overview.rtProfitRatePerYear.toFixed(2).red;
     console.log(id,chartData.overview.fundName,'当前实时年化收益率: ',displayRtProfitRatePerYear,'%');
+    consoleResultItem.splice(1, 0, displayRtProfitRatePerYear+' %');
     if(chartData.dates[0]){
       const [year,month,day] = chartData.dates[0].split('-');
       const firstDate = new Date(parseInt(year),parseInt(month)-1,parseInt(day)+1);
@@ -98,6 +114,9 @@ const process = () => {
     }else{
     }
   }
+
+  console.log(table.toString());
+
   if(ifSendMail){
     const renderedMail = renderEmail(mailData);
     console.log(renderedMail);
