@@ -69,7 +69,7 @@ const process = () => {
   let consoleResultData = [];
 
   var table = new Table({
-    head: ['ID', 'PPY','RTPPY', 'Name'],
+    head: ['ID'.white, 'PPY'.white,'RTPPY'.white, 'Name'.white],
     colWidths: [8, 10, 10, 26]
   });
 
