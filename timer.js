@@ -77,7 +77,7 @@ const process = () => {
     const chartData = fundService.getChartDataById(id);
 
     let profitPerYear = chartData.profitsRatesPerYear[chartData.profitsRatesPerYear.length-1]
-    profitPerYear = profitPerYear<0?profitPerYear.toFixed(2).green:profitPerYear.toFixed(2).red;
+    profitPerYear = (profitPerYear<0?profitPerYear.toFixed(2).green:profitPerYear.toFixed(2).red) + ' %';
 
     let consoleResultItem = [id,profitPerYear,chartData.overview.fundName];
     table.push(consoleResultItem);
