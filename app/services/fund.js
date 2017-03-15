@@ -129,9 +129,9 @@ let getChartDataById = (fundId) => {
     chartData.overview.currentPrice = chartData.overview.totalCost * (1 + _.last(chartData.profitRates) / 100);
     chartData.overview.base = base[fundId];
 
-    let realTimeData = scrapModel.getRealTimeInfoById(fundId);
+    let realTimeData = yield scrapModel.getRealTimeInfoById(fundId);
     if (realTimeData.valid === false) {
-      chartData.overview.fundName = scrapModel.fetchFundNameById(fundId);
+      chartData.overview.fundName = yield scrapModel.fetchFundNameById(fundId);
       chartData.overview.rtInfoValid = false;
       return chartData;
     }
