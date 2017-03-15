@@ -1,6 +1,8 @@
 'use strict';
 const _ = require('underscore');
 const syncRequest = require('sync-request');
+const thenRequest = require('then-request');
+const co = require('co')
 
 /**
  * 根据基金ID抓取基金所有历史净值
@@ -9,14 +11,27 @@ const syncRequest = require('sync-request');
   '2016-09-08': 1.5981,
   '2016-09-07': 1.5543, ... }
  */
-let getFundValueById = (fundId) => {
+// let getFundValueById = (fundId) => {
+//   let valueJson = {};
+//   let rawResponse = syncRequest('GET', 'http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code=' + fundId + '&page=1&per=20000').body.toString('utf-8');
+//   _.each(rawResponse.split('<tr><td>').slice(1, -1), (elem) => {
+//     let sliceArray = elem.split('</td><td class=\'tor bold\'>').slice(0, 2);
+//     valueJson[sliceArray[0]] = parseFloat(sliceArray[1]);
+//   });
+//   return valueJson;
+// };
+
+let getFundValueByIdAsync = (fundId) => {
   let valueJson = {};
-  let rawResponse = syncRequest('GET', 'http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code=' + fundId + '&page=1&per=20000').body.toString('utf-8');
-  _.each(rawResponse.split('<tr><td>').slice(1, -1), (elem)=> {
-    let sliceArray = elem.split('</td><td class=\'tor bold\'>').slice(0, 2);
-    valueJson[sliceArray[0]] = parseFloat(sliceArray[1]);
+  return co(function*() {
+    let rawResponse = yield thenRequest('GET', 'http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code=' + fundId + '&page=1&per=20000');
+    rawResponse = rawResponse.body.toString('utf-8');
+    _.each(rawResponse.split('<tr><td>').slice(1, -1), (elem) => {
+      let sliceArray = elem.split('</td><td class=\'tor bold\'>').slice(0, 2);
+      valueJson[sliceArray[0]] = parseFloat(sliceArray[1]);
+    });
+    return valueJson;
   });
-  return valueJson;
 };
 
 /**
@@ -46,7 +61,7 @@ let fetchFundNameById = (fundId) => {
 };
 
 module.exports = {
-  getFundValueById: getFundValueById,
+  getFundValueById: getFundValueByIdAsync,
   getRealTimeInfoById: getRealTimeInfoById,
   fetchFundNameById: fetchFundNameById
 };

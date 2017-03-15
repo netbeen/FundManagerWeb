@@ -27,6 +27,7 @@
     "babel-preset-stage-3": "^6.22.0",
     "bower": "^1.8.0",
     "cli-table": "^0.3.1",
+    "co": "^4.6.0",
     "colors": "^1.1.2",
     "del": ">=2.2.2",
     "gulp": ">=3.9.1",
@@ -46,6 +47,7 @@
     "sqlite-sync": "^0.3.6",
     "stylus": ">=0.54.5",
     "sync-request": "^4.0.1",
+    "then-request": "^2.2.0",
     "underscore": ">=1.8.3",
     "vinyl-paths": ">=2.1.0"
   },

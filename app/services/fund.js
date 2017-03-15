@@ -2,6 +2,7 @@
 const _ = require('underscore');
 const purchaseInfoModel = require('../models/purchaseInfo');
 const scrapModel = require('../models/scrap');
+const co = require('co');
 const subscriptionFeeRates = {
   '000071': 0.12,
   '000930': 0,
@@ -54,8 +55,10 @@ let filterUselessData = (webValueData, userPurchaseInfo) => {
   '2016-09-07': 1.0212, ... }
  */
 let getValueById = (fundId, userPurchaseInfo) => {
-  let webValueData = scrapModel.getFundValueById(fundId);
-  return filterUselessData(webValueData, userPurchaseInfo);
+  return co(function*(){
+    let webValueData = yield scrapModel.getFundValueById(fundId);
+    return filterUselessData(webValueData, userPurchaseInfo);
+  });
 };
 
 let calcUserPirces = (dates, unitPrices, userPurchaseInfo, subscriptionFeeRate) => {
@@ -109,37 +112,39 @@ let calcRtProfitRatePerYear = (startDate, endDate, profitRate, redeemFeeRate) =>
 };
 
 let getChartDataById = (fundId) => {
-  let userPurchaseInfo = purchaseInfoModel.getFundPurchaseInfoById(fundId);
-  let values = getValueById(fundId, userPurchaseInfo);
-  let chartData = {};
-  chartData.overview = {};
-  chartData.fundId = fundId;
-  chartData.dates = Object.keys(values).reverse();
-  chartData.unitPrices = _.map(Object.keys(values), (date) => {
-    return values[date];
-  }).reverse();
-  chartData.userPrices = calcUserPirces(chartData.dates, chartData.unitPrices, userPurchaseInfo, subscriptionFeeRates[fundId]);
-  chartData.profitRates = calcProfitRates(chartData.unitPrices, chartData.userPrices);
-  chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates, redeemFeeRates[fundId]);
-  chartData.overview.totalCost = calcTotalCost(userPurchaseInfo);
-  chartData.overview.currentPrice = chartData.overview.totalCost * (1 + _.last(chartData.profitRates) / 100);
-  chartData.overview.base = base[fundId];
+  return co(function*(){
+    let userPurchaseInfo = purchaseInfoModel.getFundPurchaseInfoById(fundId);
+    let values = yield getValueById(fundId, userPurchaseInfo);
+    let chartData = {};
+    chartData.overview = {};
+    chartData.fundId = fundId;
+    chartData.dates = Object.keys(values).reverse();
+    chartData.unitPrices = _.map(Object.keys(values), (date) => {
+      return values[date];
+    }).reverse();
+    chartData.userPrices = calcUserPirces(chartData.dates, chartData.unitPrices, userPurchaseInfo, subscriptionFeeRates[fundId]);
+    chartData.profitRates = calcProfitRates(chartData.unitPrices, chartData.userPrices);
+    chartData.profitsRatesPerYear = calcProfitsRatePerYear(chartData.dates, chartData.profitRates, redeemFeeRates[fundId]);
+    chartData.overview.totalCost = calcTotalCost(userPurchaseInfo);
+    chartData.overview.currentPrice = chartData.overview.totalCost * (1 + _.last(chartData.profitRates) / 100);
+    chartData.overview.base = base[fundId];
 
-  let realTimeData = scrapModel.getRealTimeInfoById(fundId);
-  if (realTimeData.valid === false) {
-    chartData.overview.fundName = scrapModel.fetchFundNameById(fundId);
-    chartData.overview.rtInfoValid = false;
+    let realTimeData = scrapModel.getRealTimeInfoById(fundId);
+    if (realTimeData.valid === false) {
+      chartData.overview.fundName = scrapModel.fetchFundNameById(fundId);
+      chartData.overview.rtInfoValid = false;
+      return chartData;
+    }
+    chartData.overview.rtInfoValid = true;
+    chartData.overview.fundName = realTimeData.fundName;
+    let lastQuotedDate = _.last(chartData.dates);
+    chartData.overview.trading = !(realTimeData.estimatedTime.slice(0, 10) === lastQuotedDate);
+    chartData.overview.rtUnitPrice = realTimeData.estimatedValue;
+    chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - _.last(chartData.unitPrices)) / _.last(chartData.unitPrices) * 100;
+    chartData.overview.rtTimeStamp = realTimeData.estimatedTime;
+    chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], _.last(chartData.dates), _.last(chartData.profitRates) + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
     return chartData;
-  }
-  chartData.overview.rtInfoValid = true;
-  chartData.overview.fundName = realTimeData.fundName;
-  let lastQuotedDate = _.last(chartData.dates);
-  chartData.overview.trading = !(realTimeData.estimatedTime.slice(0, 10) === lastQuotedDate);
-  chartData.overview.rtUnitPrice = realTimeData.estimatedValue;
-  chartData.overview.rtProfitRate = (chartData.overview.rtUnitPrice - _.last(chartData.unitPrices)) / _.last(chartData.unitPrices) * 100;
-  chartData.overview.rtTimeStamp = realTimeData.estimatedTime;
-  chartData.overview.rtProfitRatePerYear = calcRtProfitRatePerYear(chartData.dates[0], _.last(chartData.dates), _.last(chartData.profitRates) + chartData.overview.rtProfitRate, redeemFeeRates[fundId]);
-  return chartData;
+  });
 };
 
 module.exports = {
