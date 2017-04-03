@@ -64,13 +64,25 @@ $(function () {
         markArea: {
           silent: true,
           data: [[{
-            xAxis: '2014/1/1\n7:00'
+            xAxis: '2014/1/1',
+            itemStyle: {
+              normal: {
+                color: '#dddddd',
+                opacity: 0.5
+              }
+            }
           }, {
-            xAxis: '2014/12/31\n7:00'
+            xAxis: '2014/12/31'
           }],[{
-            xAxis: '2016/1/1\n7:00'
+            xAxis: '2016/1/1',
+            itemStyle: {
+              normal: {
+                color: '#dddddd',
+                opacity: 0.5
+              }
+            }
           }, {
-            xAxis: '2016/12/31\n7:00'
+            xAxis: '2016/12/31'
           }]]
         },
       }];
