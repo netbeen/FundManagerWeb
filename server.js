@@ -19,5 +19,5 @@ app.use(async(ctx, next) => {
 
 app.use(require('./app/router').routes());
 
-app.listen(3000);
-console.log('app started at port 3000...');
+app.listen(80);
+console.log('app started at port 80...');
