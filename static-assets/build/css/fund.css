@@ -1,0 +1,54 @@
+#priceCompare {
+  height: 230px;
+}
+#profitRateCompare {
+  height: 230px;
+}
+#profitRatePerYearCompare {
+  height: 230px;
+}
+#overview .label {
+  display: inline-block;
+  color: #000;
+}
+#overview .content {
+  display: inline-block;
+}
+#overview .green {
+  color: #008000;
+}
+#overview .red {
+  color: #f00;
+}
+#overview .hide {
+  display: none;
+}
+#purchaseInfoModal .modal-dialog {
+  margin: 70px 0 0 350px;
+}
+#purchaseInfoModal .modal-dialog .modal-content {
+  width: 750px;
+}
+#purchaseInfoModal .modal-dialog .modal-content .modal-body {
+  height: 150px;
+}
+#purchaseInfoModal .modal-dialog .modal-content .modal-body .item {
+  text-align: center;
+  float: left;
+  border: dashed #bbb;
+  margin: 15px;
+  width: 120px;
+}
+#purchaseInfoModal .modal-dialog .modal-content .modal-body .item .title {
+  font-size: 20px;
+}
+#purchaseInfoModal .modal-dialog .modal-content .modal-body .item .data {
+  font-size: 20px;
+}
+#purchaseInfoModal .modal-dialog .modal-content .modal-body .separator {
+  text-align: center;
+  float: left;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 30px 5px 0 5px;
+}
