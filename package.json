@@ -38,6 +38,7 @@
     "koa-bodyparser": "^4.1.0",
     "koa-pug": ">=3.0.0-0",
     "koa-router": ">=7.0.1",
+    "koa-static": "^3.0.0",
     "main-bower-files": ">=2.13.1",
     "node-schedule": "^1.2.0",
     "nodemailer": "^3.1.5",
