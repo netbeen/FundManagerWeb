@@ -22,7 +22,7 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/v$NODE_VERSION/bin:$PATH
 
 #COPY . /usr/admin/FundManagerWeb
-COPY ./package.json /usr/admin/FundManagerWeb
+COPY package.json /home/admin/FundManagerWeb/package.json
 WORKDIR /home/admin/FundManagerWeb
 #RUN mkdir .npmrc
 #RUN npm config set cache /home/admin/FundManagerWeb/.npmrc --globals
