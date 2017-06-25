@@ -238,6 +238,8 @@ $(function () {
           yAxis: [{
             type: 'value',
             scale: true,
+            max: 20,
+            min: -20,
             axisLabel: {
               formatter: function (v) {
                 return v + '%'
