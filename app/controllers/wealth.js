@@ -1,5 +1,4 @@
 'use strict';
-const purchaseInfoModel = require('../models/purchaseInfo');
 
 let render = async (ctx) => {
   ctx.render('wealth',{
@@ -7,6 +6,13 @@ let render = async (ctx) => {
   });
 };
 
+let login = async (ctx) => {
+  ctx.render('login',{
+    'pageName':'login'
+  });
+};
+
 module.exports = {
-  render: render
+  render: render,
+  login: login,
 };

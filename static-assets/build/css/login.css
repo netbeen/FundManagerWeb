@@ -1,0 +1,93 @@
+.login-title {
+  font-size: 18px;
+  text-align: center;
+  margin: 40px auto;
+}
+.content-wrap {
+  margin: 0 auto;
+  width: 340px;
+}
+.content-wrap .user-wrap {
+  display: inline-block;
+  width: 150px;
+  margin: 0 20px 0 0;
+  cursor: pointer;
+}
+.content-wrap .user-wrap img.avatar {
+  width: 150px;
+  height: 150px;
+}
+.content-wrap .user-wrap .nick {
+  text-align: center;
+}
+.content-wrap .user-wrap:hover img.avatar {
+  animation: myfirst 1s;
+}
+@-moz-keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  30% {
+    transform: translate(0px, -30px);
+  }
+  60% {
+    transform: translate(0px, 0px);
+  }
+  80% {
+    transform: translate(0px, -18px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+@-webkit-keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  30% {
+    transform: translate(0px, -30px);
+  }
+  60% {
+    transform: translate(0px, 0px);
+  }
+  80% {
+    transform: translate(0px, -18px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+@-o-keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  30% {
+    transform: translate(0px, -30px);
+  }
+  60% {
+    transform: translate(0px, 0px);
+  }
+  80% {
+    transform: translate(0px, -18px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+@keyframes myfirst {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  30% {
+    transform: translate(0px, -30px);
+  }
+  60% {
+    transform: translate(0px, 0px);
+  }
+  80% {
+    transform: translate(0px, -18px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}

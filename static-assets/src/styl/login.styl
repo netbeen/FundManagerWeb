@@ -1,0 +1,31 @@
+@keyframes myfirst
+  0%
+    transform translate(0px, 0px)
+  30%
+    transform translate(0px, -30px)
+  60%
+    transform translate(0px, 0px)
+  80%
+    transform translate(0px, -18px)
+  100%
+    transform translate(0px, 0px)
+.login-title
+  font-size 18px
+  text-align center
+  margin 40px auto
+.content-wrap
+  margin 0 auto
+  width 340px
+  .user-wrap
+    display inline-block
+    width 150px
+    margin 0 20px 0 0
+    cursor pointer
+    img.avatar
+      width 150px
+      height 150px
+    .nick
+      text-align center
+  .user-wrap:hover
+    img.avatar
+      animation myfirst 1s
