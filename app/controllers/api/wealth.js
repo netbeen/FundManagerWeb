@@ -3,7 +3,7 @@ const wealthDistributionModel = require('../../models/wealthDistribution');
 
 
 let getWealthDistribution = async (ctx) => {
-  ctx.body = wealthDistributionModel.getDistribution();
+  ctx.body = await wealthDistributionModel.getDistribution();
 };
 
 let getTypes = async (ctx) => {
