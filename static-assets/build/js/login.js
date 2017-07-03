@@ -2,8 +2,8 @@
 $(function () {
   if ($('#pageName').val() === 'login') {
     $('.user-wrap').on('click', (e)=>{
-      $.cookie('uuid',e.currentTarget.dataset.uuid);
-      window.location.href = '/fund';
+      console.log(e.currentTarget.dataset.uuid);
+      $.cookie('debug',e.currentTarget.dataset.uuid)
     });
   }
 });
