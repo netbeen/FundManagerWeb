@@ -7,7 +7,7 @@ let getWealthDistribution = async (ctx) => {
 };
 
 let getTypes = async (ctx) => {
-  ctx.body = wealthDistributionModel.getTypes();
+  ctx.body = await wealthDistributionModel.getTypes();
 };
 
 module.exports = {

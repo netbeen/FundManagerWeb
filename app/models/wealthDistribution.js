@@ -1,9 +1,7 @@
 'use strict';
-const sqlite = require('sqlite-sync');
 const _ = require('underscore');
 const config = require('../../config');
 
-sqlite.connect('./data/database.db');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('wealthManager', config.dbUsername, config.dbPassword, {
     'dialect': 'mysql',
@@ -28,9 +26,20 @@ const WealthDistribution = sequelize.define('wealthDistribution', {
   commodityFund: Sequelize.DECIMAL(10, 2),
 });
 
-let getTypes = () => {
-  return sqlite.run('select * from distribution_type');
-};
+const WealthDistributionType = sequelize.define('wealthDistributionType', {
+  target: Sequelize.STRING,
+  type: Sequelize.STRING,
+});
+
+async function getTypes(){
+  var wealthDistributionTypes = await WealthDistributionType.findAll();
+  return _.map(wealthDistributionTypes, (item) => {
+    return {
+      'target': item.dataValues.target,
+      'type': item.dataValues.type,
+    }
+  })
+}
 
 async function getDistribution(){
   var wealthDistributions = await WealthDistribution.findAll();
@@ -38,7 +47,7 @@ async function getDistribution(){
     return {
       '日期': item.dataValues.recordDate,
       '现金': parseFloat(item.dataValues.cash),
-      '活期存款': parseFloat(item.dataValues.deposit),
+      '存款': parseFloat(item.dataValues.deposit),
       '货币基金': parseFloat(item.dataValues.moneyFund),
       '蚂蚁定期': parseFloat(item.dataValues.antFinance),
       '陆金所': parseFloat(item.dataValues.luFax),
