@@ -181,9 +181,14 @@ $(function () {
           _.each(Object.keys(typeMap[type]),(target)=>{
             legendData.push(typeMap[type][target]);
             currentTypeTotal += _.last(distribution[typeMap[type][target]]);
-            targetPieData.push({value:_.last(distribution[typeMap[type][target]]), name:typeMap[type][target]});
+            const value = _.last(distribution[typeMap[type][target]])
+            if(value !== 0){
+              targetPieData.push({value, name:typeMap[type][target]});
+            }
           });
-          typePieData.push({value:currentTypeTotal, name:type});
+          if(currentTypeTotal !== 0){
+            typePieData.push({value:currentTypeTotal, name:type});
+          }
         });
 
 
