@@ -24,6 +24,7 @@ const WealthDistribution = sequelize.define('wealthDistribution', {
   bondFund: Sequelize.DECIMAL(10, 2),
   indexFund: Sequelize.DECIMAL(10, 2),
   commodityFund: Sequelize.DECIMAL(10, 2),
+  debt: Sequelize.DECIMAL(10, 2),
 });
 
 const WealthDistributionType = sequelize.define('wealthDistributionType', {
@@ -54,7 +55,8 @@ async function getDistribution(){
       '人人贷': parseFloat(item.dataValues.renRenDai),
       '债券基金': parseFloat(item.dataValues.bondFund),
       '指数基金': parseFloat(item.dataValues.indexFund),
-      '商品基金': parseFloat(item.dataValues.commodityFund)
+      '商品基金': parseFloat(item.dataValues.commodityFund),
+      debt: parseFloat(item.dataValues.debt)
     }
   })
 }

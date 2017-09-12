@@ -91,7 +91,7 @@ gulp.task('startAssetsServer', ['build'], function() {
   console.log('start development server');
   connect.server({
     root: 'static-assets',
-    port: 8888,
+    port: 8765,
     middleware: function() {
       return [function(req, res, next) {
         res.setHeader("Access-Control-Allow-Origin", "*");
