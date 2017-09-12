@@ -105,7 +105,7 @@ $(function () {
       new OptionSeriesItem('净资产', netAsset, 3, true, 1, 2),
       new OptionSeriesItem('杠杆率%', debeRate, 3, false, 1, 3),
     ];
-    const distributionChartOptionLegendData = ['总金额', '总资产', '杠杆率%'];
+    const distributionChartOptionLegendData = ['总资产', '杠杆率%'];
 
     for(const keyName of Object.keys(distributionPercentage)){
       distributionChartOptionSeries.push(new OptionSeriesItem(keyName + '%', distributionPercentage[keyName], 3, false, 0, 1));
