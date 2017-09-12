@@ -1,7 +1,7 @@
 'use strict';
 
-class MarkAreaConfigDataItem{
-  constructor(year){
+class MarkAreaConfigDataItem {
+  constructor(year) {
     return [{
       xAxis: `${year}/1/1`,
       itemStyle: {
@@ -13,6 +13,26 @@ class MarkAreaConfigDataItem{
     }, {
       xAxis: `${year}/12/31`
     }];
+  }
+}
+
+class OptionSeriesItem {
+  constructor(name, data, width, hasMarkArea, xAxisIndex, yAxisIndex) {
+    return {
+      name: name,
+      type: 'line',
+      animation: true,
+      smooth: true,
+      lineStyle: {
+        normal: {
+          width: width,
+        },
+      },
+      data: data,
+      markArea: hasMarkArea ? markAreaConfig : null,
+      xAxisIndex: xAxisIndex,
+      yAxisIndex: yAxisIndex,
+    };
   }
 }
 
@@ -82,78 +102,17 @@ $(function () {
       console.log('distributionPercentage', distributionPercentage);
       console.log('total', total);
 
-      const distributionChartOptionSeries = [{
-        name: '总金额',
-        type: 'line',
-        animation: true,
-        smooth: true,
-        lineStyle: {
-          normal: {
-            width: 5,
-          },
-        },
-        data: total,
-        markArea: markAreaConfig,
-      }, {
-        name: '总资产',
-        type: 'line',
-        animation: true,
-        smooth: true,
-        lineStyle: {
-          normal: {
-            width: 3,
-          },
-        },
-        xAxisIndex: 1,
-        yAxisIndex: 2,
-        data: total,
-      },
-        {
-          name: '净资产',
-          type: 'line',
-          animation: true,
-          smooth: true,
-          lineStyle: {
-            normal: {
-              width: 3,
-            },
-          },
-          xAxisIndex: 1,
-          yAxisIndex: 2,
-          data: netAsset,
-          markArea: markAreaConfig,
-        },
-        {
-          name: '杠杆率%',
-          type: 'line',
-          animation: true,
-          smooth: true,
-          lineStyle: {
-            normal: {
-              width: 3,
-            },
-          },
-          xAxisIndex: 1,
-          yAxisIndex: 3,
-          data: debeRate,
-        }
+      const distributionChartOptionSeries = [
+        new OptionSeriesItem('总金额', total, 5, true, 0, 0),
+        new OptionSeriesItem('总资产', total, 3, false, 1, 2),
+        new OptionSeriesItem('净资产', netAsset, 3, true, 1, 2),
+        new OptionSeriesItem('杠杆率%', debeRate, 3, false, 1, 3),
       ];
       const distributionChartOptionLegendData = ['总金额', '总资产', '杠杆率%'];
 
       _.each(Object.keys(distributionPercentage), (keyName) => {
-        distributionChartOptionSeries.push({
-          name: keyName + '%',
-          type: 'line',
-          yAxisIndex: 1,
-          animation: true,
-          smooth: true,
-          lineStyle: {
-            normal: {
-              width: 3,
-            },
-          },
-          data: distributionPercentage[keyName]
-        });
+        distributionChartOptionSeries.push(
+          new OptionSeriesItem(keyName + '%', distributionPercentage[keyName], 3, false, 0, 1));
         distributionChartOptionLegendData.push(keyName + '%');
       });
 
