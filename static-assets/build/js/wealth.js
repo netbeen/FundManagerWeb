@@ -1,4 +1,30 @@
 'use strict';
+
+const markAreaConfig = {
+  silent: true,
+  data: [[{
+    xAxis: '2014/1/1',
+    itemStyle: {
+      normal: {
+        color: '#dddddd',
+        opacity: 0.5
+      }
+    }
+  }, {
+    xAxis: '2014/12/31'
+  }], [{
+    xAxis: '2016/1/1',
+    itemStyle: {
+      normal: {
+        color: '#dddddd',
+        opacity: 0.5
+      }
+    }
+  }, {
+    xAxis: '2016/12/31'
+  }]]
+};
+
 $(function () {
   if ($('#pageName').val() === 'wealth') {
 
@@ -18,7 +44,7 @@ $(function () {
         const currentDate = new Date(elem['日期']);
         datesEchartFormat.push([currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate()].join('/'));
         let currentTotal = 0;
-        for(const key of Object.keys(elem)){
+        for (const key of Object.keys(elem)) {
           if (key !== '日期' && key !== 'debt') {
             currentTotal += elem[key];
             if (key in distribution) {
@@ -34,14 +60,14 @@ $(function () {
         });
         netAsset.push({
           name: _.last(datesEchartFormat),
-          value: [_.last(datesEchartFormat), (currentTotal-elem.debt).toFixed(2)]
+          value: [_.last(datesEchartFormat), (currentTotal - elem.debt).toFixed(2)]
         });
         debeRate.push({
           name: _.last(datesEchartFormat),
-          value: [_.last(datesEchartFormat), (elem.debt/currentTotal*100).toFixed(2)]
+          value: [_.last(datesEchartFormat), (elem.debt / currentTotal * 100).toFixed(2)]
         });
 
-        for(const key of Object.keys(distribution)){
+        for (const key of Object.keys(distribution)) {
           if (key in distributionPercentage) {
             distributionPercentage[key].push({
               name: _.last(datesEchartFormat),
@@ -71,45 +97,21 @@ $(function () {
           },
         },
         data: total,
-        markArea: {
-          silent: true,
-          data: [[{
-            xAxis: '2014/1/1',
-            itemStyle: {
-              normal: {
-                color: '#dddddd',
-                opacity: 0.5
-              }
-            }
-          }, {
-            xAxis: '2014/12/31'
-          }], [{
-            xAxis: '2016/1/1',
-            itemStyle: {
-              normal: {
-                color: '#dddddd',
-                opacity: 0.5
-              }
-            }
-          }, {
-            xAxis: '2016/12/31'
-          }]]
-        },
-      },
-        {
-          name: '总资产',
-          type: 'line',
-          animation: true,
-          smooth: true,
-          lineStyle: {
-            normal: {
-              width: 3,
-            },
+        markArea: markAreaConfig,
+      }, {
+        name: '总资产',
+        type: 'line',
+        animation: true,
+        smooth: true,
+        lineStyle: {
+          normal: {
+            width: 3,
           },
-          xAxisIndex: 1,
-          yAxisIndex: 2,
-          data: total,
         },
+        xAxisIndex: 1,
+        yAxisIndex: 2,
+        data: total,
+      },
         {
           name: '净资产',
           type: 'line',
@@ -123,30 +125,7 @@ $(function () {
           xAxisIndex: 1,
           yAxisIndex: 2,
           data: netAsset,
-          markArea: {
-            silent: true,
-            data: [[{
-              xAxis: '2014/1/1',
-              itemStyle: {
-                normal: {
-                  color: '#dddddd',
-                  opacity: 0.5
-                }
-              }
-            }, {
-              xAxis: '2014/12/31'
-            }], [{
-              xAxis: '2016/1/1',
-              itemStyle: {
-                normal: {
-                  color: '#dddddd',
-                  opacity: 0.5
-                }
-              }
-            }, {
-              xAxis: '2016/12/31'
-            }]]
-          },
+          markArea: markAreaConfig,
         },
         {
           name: '杠杆率%',
@@ -163,13 +142,13 @@ $(function () {
           data: debeRate,
         }
       ];
-      const distributionChartOptionLegendData = ['总金额','总资产','杠杆率%'];
+      const distributionChartOptionLegendData = ['总金额', '总资产', '杠杆率%'];
 
-      _.each(Object.keys(distributionPercentage),(keyName)=>{
+      _.each(Object.keys(distributionPercentage), (keyName) => {
         distributionChartOptionSeries.push({
-          name:keyName+'%',
-          type:'line',
-          yAxisIndex:1,
+          name: keyName + '%',
+          type: 'line',
+          yAxisIndex: 1,
           animation: true,
           smooth: true,
           lineStyle: {
@@ -179,7 +158,7 @@ $(function () {
           },
           data: distributionPercentage[keyName]
         });
-        distributionChartOptionLegendData.push(keyName+'%');
+        distributionChartOptionLegendData.push(keyName + '%');
       });
 
 
