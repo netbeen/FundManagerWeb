@@ -1,28 +1,24 @@
 'use strict';
 
+class MarkAreaConfigDataItem{
+  constructor(year){
+    return [{
+      xAxis: `${year}/1/1`,
+      itemStyle: {
+        normal: {
+          color: '#dddddd',
+          opacity: 0.5
+        }
+      }
+    }, {
+      xAxis: `${year}/12/31`
+    }];
+  }
+}
+
 const markAreaConfig = {
   silent: true,
-  data: [[{
-    xAxis: '2014/1/1',
-    itemStyle: {
-      normal: {
-        color: '#dddddd',
-        opacity: 0.5
-      }
-    }
-  }, {
-    xAxis: '2014/12/31'
-  }], [{
-    xAxis: '2016/1/1',
-    itemStyle: {
-      normal: {
-        color: '#dddddd',
-        opacity: 0.5
-      }
-    }
-  }, {
-    xAxis: '2016/12/31'
-  }]]
+  data: [new MarkAreaConfigDataItem(2014), new MarkAreaConfigDataItem(2016)]
 };
 
 $(function () {
