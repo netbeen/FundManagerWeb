@@ -205,31 +205,31 @@ $(function () {
       url: '/api/v1/wealthType',
       type: "get",
     }).done((typeObjs) => {
-      _.each(typeObjs, (typeObj) => {
+      for(const typeObj of typeObjs){
         if (!(typeObj.type in typeMap)) {
           typeMap[typeObj.type] = [typeObj.target];
         } else {
           typeMap[typeObj.type].push(typeObj.target);
         }
-      });
+      }
 
       let typePieData = [];
       let targetPieData = [];
-      _.each(Object.keys(typeMap), (type) => {
+      for(const type of Object.keys(typeMap)){
         legendData.push(type);
         let currentTypeTotal = 0;
-        _.each(Object.keys(typeMap[type]), (target) => {
+        for(const target of Object.keys(typeMap[type])){
           legendData.push(typeMap[type][target]);
           currentTypeTotal += _.last(distribution[typeMap[type][target]]);
           const value = _.last(distribution[typeMap[type][target]])
           if (value !== 0) {
             targetPieData.push({value, name: typeMap[type][target]});
           }
-        });
+        }
         if (currentTypeTotal !== 0) {
           typePieData.push({value: currentTypeTotal, name: type});
         }
-      });
+      }
 
 
       const pieOption = {
