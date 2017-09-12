@@ -47,7 +47,7 @@ class OptionSeriesDataItem {
 
 const markAreaConfig = {
   silent: true,
-  data: [new MarkAreaConfigDataItem(2014), new MarkAreaConfigDataItem(2016)]
+  data: [new MarkAreaConfigDataItem(2014), new MarkAreaConfigDataItem(2016), new MarkAreaConfigDataItem(2018)]
 };
 
 $(function () {
@@ -67,7 +67,7 @@ $(function () {
     let datesEchartFormat = [];
 
     // 遍历ajax请求所获取的数组信息
-    _.each(data, function (elem) {
+    for(const elem of data){
       const currentDate = new Date(elem['日期']);
       datesEchartFormat.push([currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate()].join('/'));
       let currentTotal = 0;
@@ -81,22 +81,23 @@ $(function () {
           }
         }
       }
-      total.push(new OptionSeriesDataItem(_.last(datesEchartFormat), currentTotal));
-      netAsset.push(new OptionSeriesDataItem(_.last(datesEchartFormat), currentTotal - elem.debt));
-      debeRate.push(new OptionSeriesDataItem(_.last(datesEchartFormat), elem.debt / currentTotal * 100));
+      const latestDate = _.last(datesEchartFormat);
+      total.push(new OptionSeriesDataItem(latestDate, currentTotal));
+      netAsset.push(new OptionSeriesDataItem(latestDate, currentTotal - elem.debt));
+      debeRate.push(new OptionSeriesDataItem(latestDate, elem.debt / currentTotal * 100));
 
       for (const key of Object.keys(distribution)) {
         if (key in distributionPercentage) {
-          distributionPercentage[key].push(new OptionSeriesDataItem(_.last(datesEchartFormat), _.last(distribution[key]) / currentTotal * 100));
+          distributionPercentage[key].push(new OptionSeriesDataItem(latestDate, _.last(distribution[key]) / currentTotal * 100));
         } else {
-          distributionPercentage[key] = [new OptionSeriesDataItem(_.last(datesEchartFormat), _.last(distribution[key]) / currentTotal * 100)];
+          distributionPercentage[key] = [new OptionSeriesDataItem(latestDate, _.last(distribution[key]) / currentTotal * 100)];
         }
       }
-    });
+    }
 
-    console.log('distribution', distribution);
-    console.log('distributionPercentage', distributionPercentage);
-    console.log('total', total);
+    // console.log('distribution', distribution);
+    // console.log('distributionPercentage', distributionPercentage);
+    // console.log('total', total);
 
     const distributionChartOptionSeries = [
       new OptionSeriesItem('总金额', total, 5, true, 0, 0),
@@ -106,12 +107,10 @@ $(function () {
     ];
     const distributionChartOptionLegendData = ['总金额', '总资产', '杠杆率%'];
 
-    _.each(Object.keys(distributionPercentage), (keyName) => {
-      distributionChartOptionSeries.push(
-        new OptionSeriesItem(keyName + '%', distributionPercentage[keyName], 3, false, 0, 1));
+    for(const keyName of Object.keys(distributionPercentage)){
+      distributionChartOptionSeries.push(new OptionSeriesItem(keyName + '%', distributionPercentage[keyName], 3, false, 0, 1));
       distributionChartOptionLegendData.push(keyName + '%');
-    });
-
+    }
 
     const distributionChartOption = {
       title: {
