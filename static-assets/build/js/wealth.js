@@ -176,6 +176,9 @@ $(function () {
           gridIndex: 0,
           name: '百分比(%)',
           type: 'value',
+          axisLabel: {
+            formatter: '{value}%'
+          }
         },
         {
           gridIndex: 1,
@@ -186,6 +189,9 @@ $(function () {
           gridIndex: 1,
           name: '杠杆率(%)',
           type: 'value',
+          axisLabel: {
+            formatter: '{value}%'
+          }
         }
       ],
       series: distributionChartOptionSeries
