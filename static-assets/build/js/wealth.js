@@ -169,7 +169,7 @@ $(function () {
       yAxis: [
         {
           gridIndex: 0,
-          name: '总资产(RMB/元)',
+          name: '总资产(CNY)',
           type: 'value',
         },
         {
@@ -179,7 +179,7 @@ $(function () {
         },
         {
           gridIndex: 1,
-          name: '金额',
+          name: 'CNY',
           type: 'value',
         },
         {
