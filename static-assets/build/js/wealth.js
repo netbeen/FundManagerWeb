@@ -164,8 +164,6 @@ $(function () {
           type: 'time',
           boundaryGap: false,
           axisLine: {onZero: true},
-          position: 'top',
-          show: false
         }
       ],
       yAxis: [
