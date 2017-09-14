@@ -182,7 +182,7 @@ $(function () {
         },
         {
           gridIndex: 1,
-          name: 'CNY',
+          name: '总/净资产(CNY)',
           type: 'value',
         },
         {
