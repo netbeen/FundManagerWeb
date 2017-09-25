@@ -84,7 +84,7 @@ $(function () {
       const latestDate = _.last(datesEchartFormat);
       total.push(new OptionSeriesDataItem(latestDate, currentTotal));
       netAsset.push(new OptionSeriesDataItem(latestDate, currentTotal - elem.debt));
-      debeRate.push(new OptionSeriesDataItem(latestDate, elem.debt / currentTotal * 100));
+      debeRate.push(new OptionSeriesDataItem(latestDate, elem.debt / (currentTotal-elem.debt) * 100));
 
       for (const key of Object.keys(distribution)) {
         if (key in distributionPercentage) {
