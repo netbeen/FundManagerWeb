@@ -1,6 +1,7 @@
 'use strict';
 const _ = require('underscore');
 const purchaseInfoModel = require('../models/purchaseInfo');
+const fundHistoryModel = require('../models/fundHistory');
 const scrapModel = require('../models/scrap');
 const co = require('co');
 const subscriptionFeeRates = {
@@ -150,6 +151,14 @@ let getChartDataById = (fundId) => {
   });
 };
 
+let getHistory = () => {
+  return co(function*() {
+    let result = yield fundHistoryModel.getHistory();
+    return result;
+  });
+}
+
 module.exports = {
-  getChartDataById: getChartDataById
+  getChartDataById: getChartDataById,
+  getHistory: getHistory
 };

@@ -12,6 +12,13 @@ let render = async (ctx) => {
   });
 };
 
+let fundHistory = async (ctx) => {
+  ctx.render('fundHistory',{
+    'pageName':'fundHistory',
+  });
+};
+
 module.exports = {
-  render: render
+  render: render,
+  fundHistory: fundHistory
 };
