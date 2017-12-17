@@ -118,9 +118,6 @@ $(function () {
         x: 'left',
         align: 'right'
       },
-      // grid: {
-      //   bottom: 80
-      // },
       grid: [{
         left: 50,
         right: 50,
@@ -144,14 +141,13 @@ $(function () {
         data: distributionChartOptionLegendData,
         x: 'right'
       },
-      dataZoom: [
-        {
-          show: true,
-          realtime: true,
-          start: 0,
-          end: 100
-        }
-      ],
+      dataZoom: [{
+        show: true,
+        realtime: true,
+        start: 0,
+        end: 100,
+        xAxisIndex: [0, 1]
+      }],
       xAxis: [
         {
           gridIndex: 0,
