@@ -8,23 +8,27 @@ const AVERAGE_DAY_OF_MONTH = 365 / 12;
 
 // 蚂蚁借呗 5.6%
 // const CORPUS = 10000;
-// const MONTHLY_PATMENT = 1694.36;
+// const MONTHLY_PAYMENT = 1694.36;
 // const TERMS_OF_LOAN = 6;
 
 // 房贷 4.3%
 // const CORPUS = 1800000;
-// const MONTHLY_PATMENT = 8910;
+// const MONTHLY_PAYMENT = 8910;
 // const TERMS_OF_LOAN = 360;
 
 // 招行闪电贷 8.2%
 // const CORPUS = 300000;
-// const MONTHLY_PATMENT = 6123.2;
+// const MONTHLY_PAYMENT = 6123.2;
 // const TERMS_OF_LOAN = 60;
 
 // 中信银行信用贷 8.3%
 // const CORPUS = 158000;
-// const MONTHLY_PATMENT = 26981.13;
+// const MONTHLY_PAYMENT = 26981.13;
 // const TERMS_OF_LOAN = 6;
+
+const CORPUS = 207200;
+const MONTHLY_PAYMENT = 6211;
+const TERMS_OF_LOAN = 36;
 
 const calculateMonthlyInterest = (currentCorpus, irr) => {
   return currentCorpus * irr * AVERAGE_DAY_OF_MONTH
@@ -49,22 +53,22 @@ const calculateRestCorpus = (corpus, monthlyPayment, termOfLoan, guessIrr) => {
 }
 
 let highIrr = 1;
-let lowIrr = 0;
+let lowIrr = -1;
 const PRECISION = 0.01;
 
 while (true) {
   const guessIrr = (highIrr + lowIrr) / 2;
-  let restCorpus = calculateRestCorpus(CORPUS, MONTHLY_PATMENT, TERMS_OF_LOAN, guessIrr);
-  console.log('restCorpus',restCorpus,'guessIrr',(highIrr + lowIrr) / 2);
-  if (Math.abs(restCorpus) >  PRECISION) {
-    if(restCorpus > 0){
+  let restCorpus = calculateRestCorpus(CORPUS, MONTHLY_PAYMENT, TERMS_OF_LOAN, guessIrr);
+  console.log('restCorpus', restCorpus, 'guessIrr', (highIrr + lowIrr) / 2);
+  if (Math.abs(restCorpus) > PRECISION) {
+    if (restCorpus > 0) {
       highIrr = guessIrr;
-    }else{
+    } else {
       lowIrr = guessIrr;
     }
-  }else{
+  } else {
     console.log('done!');
-    console.log('restCorpus',restCorpus,'guessIrr',guessIrr,'monthRate',guessIrr*AVERAGE_DAY_OF_MONTH, 'yearRate',guessIrr*365);
+    console.log('restCorpus', restCorpus, 'guessIrr', guessIrr * 100 + '%', 'monthRate', guessIrr * AVERAGE_DAY_OF_MONTH * 100 + '%', 'yearRate', guessIrr * 365 * 100 + '%');
     break;
   }
 }
