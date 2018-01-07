@@ -26,6 +26,7 @@ const AVERAGE_DAY_OF_MONTH = 365 / 12;
 // const MONTHLY_PAYMENT = 26981.13;
 // const TERMS_OF_LOAN = 6;
 
+// 奥迪车贷 5.01%
 const CORPUS = 207200;
 const MONTHLY_PAYMENT = 6211;
 const TERMS_OF_LOAN = 36;
@@ -68,7 +69,7 @@ while (true) {
     }
   } else {
     console.log('done!');
-    console.log('restCorpus', restCorpus, 'guessIrr', guessIrr * 100 + '%', 'monthRate', guessIrr * AVERAGE_DAY_OF_MONTH * 100 + '%', 'yearRate', guessIrr * 365 * 100 + '%');
+    console.log('restCorpus', restCorpus, 'guessIrr', (guessIrr * 100).toFixed(4) + '%', 'monthRate', (guessIrr * AVERAGE_DAY_OF_MONTH * 100).toFixed(4) + '%', 'yearRate', (guessIrr * 365 * 100).toFixed(4) + '%');
     break;
   }
 }
