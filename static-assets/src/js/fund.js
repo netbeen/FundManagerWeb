@@ -157,7 +157,7 @@ $(function () {
             name: '单位净值',
             type: 'line',
             data: unitPrices,
-            markPoint: markPointConfig,
+            // markPoint: markPointConfig,
             markLine: {
               data: [{
                 type: 'average',
@@ -169,7 +169,7 @@ $(function () {
               name: '持仓成本',
               type: 'line',
               data: userPrices,
-              markPoint: markPointConfig
+              // markPoint: markPointConfig
             }]
         };
         var profitRateOption = {
