@@ -12,6 +12,12 @@ let render = async (ctx) => {
   });
 };
 
+let renderIrr = async (ctx) => {
+  ctx.render('irr',{
+    'pageName':'irr',
+  });
+};
+
 let fundHistory = async (ctx) => {
   ctx.render('fundHistory',{
     'pageName':'fundHistory',
@@ -20,5 +26,6 @@ let fundHistory = async (ctx) => {
 
 module.exports = {
   render: render,
+  irr: renderIrr,
   fundHistory: fundHistory
 };

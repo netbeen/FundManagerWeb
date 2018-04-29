@@ -1,0 +1,20 @@
+input(type='hidden' id="pageName" value=pageName)
+script(src='http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js')
+script(src=assets+'/js/irr.js')
+
+.container-fluid
+    .row
+        div
+            span 贷款金额
+            input.corpus
+        div
+            span 还款期数
+            input.terms-of-loan
+        div
+            span 每月还款额
+            input.monthly-patment
+        div
+            button.calc 计算IRR
+        div
+            span 实际年化利率：
+            span.irr

@@ -12,6 +12,7 @@ router.get('/api/v1/getHistory',apiFundController.getHistory);
 router.get('/api/v1/wealthDistribution',apiWealthController.getWealthDistribution);
 router.get('/api/v1/wealthType',apiWealthController.getTypes);
 
+router.get('/irr', fundController.irr);
 router.get('/fund', fundController.render);
 router.get('/fundHistory', fundController.fundHistory);
 router.get('/wealth', wealthController.render);
