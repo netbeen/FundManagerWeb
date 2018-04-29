@@ -1,20 +1,25 @@
-input(type='hidden' id="pageName" value=pageName)
-script(src='http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js')
-script(src=assets+'/js/irr.js')
+head
+    meta(charset="utf-8")
+    meta(name="description" content="")
+    meta(name="viewport" content="width=device-width,initial-scale=2.0")
+body
+    input(type='hidden' id="pageName" value=pageName)
+    script(src='http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js')
+    script(src=assets+'/js/irr.js')
 
-.container-fluid
-    .row
-        div
-            span 贷款金额
-            input.corpus
-        div
-            span 还款期数
-            input.terms-of-loan
-        div
-            span 每月还款额
-            input.monthly-patment
-        div
-            button.calc 计算IRR
-        div
-            span 实际年化利率：
-            span.irr
+    .container-fluid
+        .row(style="font-size:60px;")
+            div
+                span() 贷款金额
+                input.corpus(style="width: 70%;font-size: 60px;")
+            div
+                span 还款期数
+                input.terms-of-loan(style="width: 70%;font-size: 60px;")
+            div
+                span 每月还款额
+                input.monthly-patment(style="width: 70%;font-size: 60px;")
+            div
+                button.calc(style="font-size: 60px;") 计算IRR
+            div
+                span 实际年化利率：
+                span    .irr
